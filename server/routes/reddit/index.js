@@ -71,12 +71,17 @@
       if (user !== null) {
         return reddit('/u/' + user.name + '/saved').get().then(function (result) {
           return res.send(JSON.stringify(result, null, 4));
+        }).catch(function (error) {
+          return res.status(500).send(JSON.stringify(error, null, 4));
         });
       } else {
         return reddit('/api/v1/me').get().then(function (result) {
           return reddit('/u/' + user.name + '/saved').get().then(function (result) {
             return res.send(JSON.stringify(result, null, 4));
           });
+        }).catch(function (error) {
+          // throw error;
+          return res.status(500).send(JSON.stringify(error, null, 4));
         });
       }
     });

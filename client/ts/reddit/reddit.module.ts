@@ -1,3 +1,5 @@
+/// <reference path="./reddit.d.ts" />
+
 module reddit {
 	
 }

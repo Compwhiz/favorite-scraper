@@ -6,6 +6,8 @@ module reddit {
 		static $inject = ['RedditService'];
 
 		public redditLoginUrl;
+		public savedPosts = [];
+		public loadingSavedPosts: boolean = false;
 
 		constructor(private RedditService: RedditService) {
 			this.getRedditLoginUrl();
@@ -28,6 +30,17 @@ module reddit {
 			}).catch((error) => {
 				console.log(error);
 			});
+		}
+
+		getSavedPosts() {
+			this.loadingSavedPosts = true;
+			this.RedditService.getSavedPosts().then((response) => {
+				this.savedPosts = _.pluck(response.data.children, 'data');
+				this.loadingSavedPosts = false;
+			}).catch((error) => {
+				console.log(error);
+				this.loadingSavedPosts = false;
+			})
 		}
 	}
 }

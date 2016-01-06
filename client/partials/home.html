@@ -4,5 +4,38 @@
         <div>
             <a data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
         </div>
+        <div>
+            <a data-ng-click="ctrl.getSavedPosts()">Get Saved Posts</a>
+            <p data-ng-show="ctrl.loadingSavedPosts">
+                Loading...
+            </p>
+            <div>
+                <label>
+                    <input type="radio" ng-model="ctrl.orderBy" value="subreddit">SubReddit
+                </label>
+                <br/>
+                <label>
+                    <input type="radio" ng-model="ctrl.orderBy" value="domain"> Domain
+                </label>
+                <br/>
+                <label>
+                    <input type="radio" ng-model="ctrl.orderBy" value="title"> Title
+                </label>
+                {{ctrl.orderBy}}
+            </div>
+            <p>{{filteredPosts.length}} of {{ctrl.savedPosts.length}} posts</p>
+            <table class="table">
+                <tr data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy)">
+                    <td>
+                        <h3><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
+                        <div>
+                            <em>r/{{post.subreddit}}</em>
+                        </div>
+                        <!--<pre>{{post | json:4}}
+                            </pre>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

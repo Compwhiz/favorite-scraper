@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
+/// <reference path="../reddit.d.ts" />
 
 module reddit {
 	export class RedditService {
@@ -39,6 +39,13 @@ module reddit {
 				});
 				return defer.promise;
 			}
+		}
+		
+		public getSavedPosts(){
+			var url = this.apiBase + 'saved';
+			return this.$http.get<any>(url).then((response) => {
+				return response.data
+			});
 		}
 	}
 }
