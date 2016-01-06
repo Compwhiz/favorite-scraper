@@ -1,0 +1,8 @@
+<div class="container" data-ng-controller="RedditController as ctrl">
+    <div>
+        <a data-ng-show="ctrl.redditLoginUrl" href="{{ctrl.redditLoginUrl}}">Reddit Login</a>
+        <div>
+            <a data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
+        </div>
+    </div>
+</div>

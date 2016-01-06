@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="favoriteScrapper">
+
+<head>
+  <title>Todo App</title>
+  <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css">
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/client/css/styles.css">
+  <!-- endinject -->
+</head>
+
+<body>
+  <div class="container">
+    <h1>Todo App</h1>
+    <hr/>
+    <ui-view></ui-view>
+  </div>
+  <!-- bower:js -->
+  <script src="/libs/angular/angular.js"></script>
+  <script src="/libs/jquery/dist/jquery.js"></script>
+  <script src="/libs/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
+  <!-- endbower -->
+  <!-- inject:js -->
+  <script src="/client/js/app.module.js"></script>
+  <script src="/client/js/reddit/reddit.module.js"></script>
+  <script src="/client/js/reddit/controllers/reddit.controller.js"></script>
+  <script src="/client/js/reddit/services/reddit.service.js"></script>
+  <!-- endinject -->
+</body></html>
