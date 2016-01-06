@@ -35,9 +35,6 @@ function printSlice(slice) {
   });
 }
 
-var url = reddit.getAuthUrl('foobar');
-console.log(url);
-
 // get information about a user
 // reddit('/api/v1/me').get().then(function(result) {
 

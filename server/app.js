@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     var express = require('express');
@@ -6,6 +6,9 @@
     var logger = require('morgan');
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
+
+    // Setup localStorage
+    require('./config/localstorage');
 
     var routes = require('./routes/index');
 
@@ -30,7 +33,7 @@
     app.use(express.static(path.join(__dirname, '../')));
     app.use(express.static(path.join(__dirname, '../client')));
 
-    app.all('*', function(req, res, next) {
+    app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header("Access-Control-Allow-Headers", "X-Requested-With,X-Powered-By,Content-Type");
@@ -48,9 +51,9 @@
 
     app.set('port', process.env.PORT || 3000);
 
-    var server = app.listen(app.get('port'), function() {
+    var server = app.listen(app.get('port'), function () {
         console.log('Express server listening on port ' + server.address().port);
     });
 
     module.exports = app;
-}());
+} ());
