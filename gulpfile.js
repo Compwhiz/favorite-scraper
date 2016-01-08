@@ -25,6 +25,18 @@
     })
       .on('restart');
   });
+  
+  //register nodemon task
+  gulp.task('nodemon:debug', function () {
+    nodemon({
+      script: 'server/app.js',
+      env: {
+        'NODE_ENV': 'development'
+      },
+      nodeArgs:['--debug']
+    })
+      .on('restart');
+  });
 
   // Rerun the task when a file changes
   gulp.task('watch', function () {
@@ -78,5 +90,6 @@
 
   // The default task (called when you run `gulp` from cli)
   gulp.task('default', ['build', 'nodemon', 'watch']);
+  gulp.task('debug', ['build', 'nodemon:debug', 'watch']);
 
 } ());

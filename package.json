@@ -18,9 +18,9 @@
     "forever": "^0.11.1",
     "medium-sdk": "0.0.1",
     "morgan": "^1.2.3",
+    "node-twitter-api": "^1.6.5",
     "request": "^2.67.0",
     "snoocore": "^3.2.1",
-    "twitter": "^1.2.5",
     "url": "^0.11.0"
   },
   "devDependencies": {

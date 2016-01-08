@@ -1,0 +1,24 @@
+<div class="container">
+	<a data-ng-show="ctrl.twitterLoginUrl" href="{{ctrl.twitterLoginUrl}}">Twitter Login</a>
+	<div>
+		<a data-ng-click="ctrl.getFavorites()">Get Favorites</a>
+	</div>
+	<div>
+		<a data-ng-click="ctrl.getTwitterRequestToken()">Get Request Token</a>
+	</div>
+	<div>
+		<a data-ng-click="ctrl.getTwitterLoginUrl()">Get Twitter Login</a>
+	</div>
+	<div>
+		<a data-ng-show="ctrl.twitterLoginUrl" href="{{ctrl.twitterLoginUrl}}">Twitter Login</a>
+	</div>
+	<table class="table">
+		<tr data-ng-repeat="tweet in ctrl.favorites">
+			<td>
+				<pre>
+					{{tweet | json:4}}
+				</pre>
+			</td>
+		</tr>
+	</table>
+</div>

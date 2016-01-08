@@ -23,6 +23,14 @@ module favoriteScrapper {
 		}).state('mediumCallback', {
 			url: '/medium/auth/callback',
 			controller: 'MediumAuthController'
+		}).state('twitter', {
+			url: '/twitter',
+			templateUrl: '/partials/twitter.html',
+			controller: 'TwitterController',
+			controllerAs: 'ctrl'
+		}).state('twitterCallback', {
+			url: '/twitter/auth/callback',
+			controller: 'TwitterAuthController'
 		});
 		
 		// $locationProvider.html5Mode(true);
@@ -30,7 +38,14 @@ module favoriteScrapper {
 }
 
 (() => {
-	let app = angular.module('favoriteScrapper', ['ui.bootstrap', 'ui.router', 'reddit', 'common', 'medium']);
+	let app = angular.module('favoriteScrapper', [
+		'ui.bootstrap',
+		'ui.router',
+		'reddit',
+		'common',
+		'medium',
+		'twitter'
+	]);
 
 	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', favoriteScrapper.Config]);
 })();

@@ -12,6 +12,8 @@
 
     var routes = require('./routes/index');
 
+    // @TODO - move api keys to local config file
+    
     // Configure reddit snoocore
     var reddit = require('./config/snoocore/index');
     var redditRoutes = require('./routes/reddit/index')(reddit);
@@ -19,6 +21,10 @@
     // Configure medium client
     var mediumConfig = require('./config/medium/index');
     var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client);
+    
+    // Configure twitter client
+    var twitterClient = require('./config/twitter/index');
+    var twitterRoutes = require('./routes/twitter/index')(twitterClient);
 
     var app = express();
 
@@ -53,6 +59,7 @@
     // API routes
     app.use('/api/reddit', redditRoutes);
     app.use('/api/medium', mediumRoutes);
+    app.use('/api/twitter', twitterRoutes);
 
     app.set('port', process.env.PORT || 3000);
 
