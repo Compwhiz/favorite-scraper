@@ -4,3 +4,4 @@ dist
 libs
 typings
 client/js
+server/config

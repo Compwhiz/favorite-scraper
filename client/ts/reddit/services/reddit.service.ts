@@ -16,9 +16,7 @@ module reddit {
 
 		public getLoginUrl() {
 			var url = this.apiBase + 'auth-url';
-			return this.$http.get(url).then((response) => {
-				return response.data
-			});
+			return this.$http.get(url).then(response => response.data);
 		}
 
 		public userLoggedIn() {
@@ -40,16 +38,20 @@ module reddit {
 				return defer.promise;
 			}
 		}
-		
-		public getSavedPosts(){
+
+		public getSavedPosts() {
 			var url = this.apiBase + 'saved';
-			return this.$http.get<any>(url).then((response) => {
-				return response.data
-			});
+			return this.$http.get<any>(url).then(response => response.data);
+		}
+
+		public login(state, code) {
+			var data = { state: state, code: code };
+			var url = this.apiBase + 'login';
+			return this.$http.post(url, data);
 		}
 	}
 }
 
 (() => {
-	angular.module('reddit.services', []).factory('RedditService', reddit.RedditService.factory());
+	angular.module('reddit').factory('RedditService', reddit.RedditService.factory());
 })();

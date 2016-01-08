@@ -46,5 +46,5 @@ module reddit {
 }
 
 (() => {
-	angular.module('reddit.controllers', []).controller('RedditController', reddit.RedditController);
+	angular.module('reddit').controller('RedditController', reddit.RedditController);
 })();

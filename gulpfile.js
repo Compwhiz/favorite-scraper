@@ -59,7 +59,7 @@
     var sources = gulp.src('./client/css/**/*.css', { read: false });
 
     return gulp.src(config.index)
-      // .pipe(wiredep(wiredepOptions))
+    // .pipe(wiredep(wiredepOptions))
       .pipe(inject(sources))
       .pipe(gulp.dest(config.serverViews));
   });
@@ -74,7 +74,9 @@
       .pipe(gulp.dest(config.serverViews))
   });
 
+  gulp.task('build', ['compile:ts', /*'lint',*/ 'inject:js'], function () { });
+
   // The default task (called when you run `gulp` from cli)
-  gulp.task('default', ['compile:ts', 'lint', 'inject:js', 'nodemon', 'watch']);
+  gulp.task('default', ['build', 'nodemon', 'watch']);
 
 } ());

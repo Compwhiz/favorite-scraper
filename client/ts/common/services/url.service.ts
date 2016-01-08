@@ -1,42 +1,37 @@
-/// <reference path="../../common.d.ts" />
+/// <reference path="../common.d.ts" />
 
-(function () {
-    'use strict';
+module common.services {
+    export class UrlService {
 
-    angular
-        .module('common')
-        .service('UrlService', UrlService);
+        static $inject = ['$window'];
+        _isWindowLocationChanging = false;
 
-    UrlService.$inject = ['$window'];
+        constructor(private $window: ng.IWindowService) { }
 
-    function UrlService($window) {
-        this.getFragment = getFragment;
-        this.parseQueryString = parseQueryString;
-        this.getQueryString = getQueryString;
-        this.resetQueryStringWindow = resetQueryStringWindow;
-        this.setWindowLocation = setWindowLocation;
-        this.isWindowLocationChanging = isWindowLocationChanging;
+        static factory() {
+            var factory = ($window: ng.IWindowService) => new UrlService($window);
+            factory.$inject = UrlService.$inject;
+            return factory;
+        }
 
-        var _isWindowLocationChanging = false;
-
-        function getFragment() {
-            if ($window.location.hash.indexOf("#") === 0) {
-                return parseQueryString($window.location.hash.substr(1));
+        getFragment() {
+            if (this.$window.location.hash.indexOf("#") === 0) {
+                return this.parseQueryString(this.$window.location.hash.substr(1));
             } else {
                 return {};
             }
         }
 
-        function getQueryString() {
-            if ($window.location.search.indexOf("?") === 0) {
-                return parseQueryString($window.location.search.substr(1));
+        getQueryString() :any {
+            if (this.$window.location.search.indexOf("?") === 0) {
+                return this.parseQueryString(this.$window.location.search.substr(1));
             }
             else {
                 return null;
             }
         }
 
-        function parseQueryString(queryString) {
+        parseQueryString(queryString) {
             var data = {},
                 pairs, pair, separatorIndex, escapedKey, escapedValue, key, value;
 
@@ -67,7 +62,7 @@
             return data;
         }
 
-        function encodeQueryString(data) {
+        encodeQueryString(data) {
             var ret = [];
             for (var d in data) {
                 if (data[d]) {
@@ -77,35 +72,27 @@
             return ret.join("&");
         }
 
-        function resetQueryStringWindow(data) {
-            var qs = encodeQueryString(data);
+        resetQueryStringWindow(data) {
+            var qs = this.encodeQueryString(data);
             if (qs) {
                 qs = '?' + qs;
             }
 
             // TODO: Somehow the question mark won't go away when we clear the query string.
             // Not a big deal, but maybe worth looking into at some point.
-            $window.location.search = qs || '';
-            _isWindowLocationChanging = true;
+            this.$window.location.search = qs || '';
+            this._isWindowLocationChanging = true;
         }
 
-        function isWindowLocationChanging() {
-            return _isWindowLocationChanging;
-        }
-
-        function setWindowLocation(url, objectOnly) {
-            if (objectOnly) {
-                // We are only setting the object on the Facebook signin.
-                // Verify if this is correct, but read that setting just the
-                // object does not require SAME ORIGIN.
-                // http://stackoverflow.com/questions/2383401/javascript-setting-location-href-versus-location
-                $window.location = url;
-            }
-            else {
-                $window.location.href = url;
-            }
-
-            _isWindowLocationChanging = true;
+        isWindowLocationChanging() {
+            return this._isWindowLocationChanging;
         }
     }
+}
+
+(() => {
+    angular
+        .module('common')
+        .service('UrlService', common.services.UrlService.factory());
 })();
+    

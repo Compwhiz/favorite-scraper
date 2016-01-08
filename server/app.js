@@ -16,6 +16,10 @@
     var reddit = require('./config/snoocore/index');
     var redditRoutes = require('./routes/reddit/index')(reddit);
 
+    // Configure medium client
+    var mediumConfig = require('./config/medium/index');
+    var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client);
+
     var app = express();
 
     // view engine setup
@@ -48,6 +52,7 @@
     
     // API routes
     app.use('/api/reddit', redditRoutes);
+    app.use('/api/medium', mediumRoutes);
 
     app.set('port', process.env.PORT || 3000);
 

@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../common/common.d.ts" />
 /// <reference path="./services/reddit.service.ts" />
 /// <reference path="./reddit.module.ts" />
 
