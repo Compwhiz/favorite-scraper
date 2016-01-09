@@ -33,7 +33,7 @@
       env: {
         'NODE_ENV': 'development'
       },
-      nodeArgs:['--debug']
+      nodeArgs: ['--debug']
     })
       .on('restart');
   });
@@ -84,6 +84,10 @@
       .pipe(wiredep(wiredepOptions))
       .pipe(inject(sources))
       .pipe(gulp.dest(config.serverViews))
+  });
+
+  gulp.task('watch:ts', function () {
+    gulp.watch('./client/ts/**/*.ts', ['build']);
   });
 
   gulp.task('build', ['compile:ts', /*'lint',*/ 'inject:js'], function () { });

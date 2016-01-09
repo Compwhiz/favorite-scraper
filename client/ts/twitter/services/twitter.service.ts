@@ -19,11 +19,11 @@ module twitter {
 			return this.$http.get(url).then(response => response.data);
 		}
 
-public getRequestToken() {
+		public getRequestToken() {
 			var url = this.apiBase + 'request-token';
 			return this.$http.get(url).then(response => response.data);
 		}
-		
+
 		public userLoggedIn() {
 			return this.currentUser !== null;
 		}
@@ -42,7 +42,9 @@ public getRequestToken() {
 					defer.resolve(response.data);
 				else
 					defer.reject(response.data);
-			}).catch(error=> error.data);
+			}).catch(error=> {
+				defer.reject(error.data);
+			});
 			return defer.promise;
 		}
 	}

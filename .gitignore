@@ -5,3 +5,4 @@ libs
 typings
 client/js
 server/config
+.vscode

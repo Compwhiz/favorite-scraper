@@ -1,0 +1,26 @@
+<div class="container-fluid">
+	<div class="media">
+		<div class="media-left">
+			<a href="{{post.url}}" target="_blank">
+				<img class="media-object img-rounded" src="{{post.thumbnail}}" alt="Thumbnail" style="min-width:140px;">
+			</a>
+		</div>
+		<div class="media-body">
+			<h3 class="media-heading"><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
+			<div>
+				submitted <span am-time-ago="post.created | amFromUnix"></span> by
+				<a href="https://www.reddit.com/user/{{post.author}}" target="_blank">{{post.author}}</a> to
+				<a href="https://www.reddit.com/r/{{post.subreddit}}" target="_blank">r/{{post.subreddit}}</a>
+			</div>
+			<p data-ng-if="post.selftext">
+				{{post.selftext}}
+			</p>
+			<uib-accordion>
+				<uib-accordion-group heading="Raw Post">
+					<pre>{{post | json:4}}
+                            </pre>
+				</uib-accordion-group>
+			</uib-accordion>
+		</div>
+	</div>
+</div>

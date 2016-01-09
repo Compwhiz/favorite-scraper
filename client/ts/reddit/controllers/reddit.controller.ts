@@ -15,8 +15,10 @@ module reddit {
 
 		getRedditLoginUrl() {
 			this.RedditService.getLoginUrl().then((response) => {
-				console.log(response);
-				this.redditLoginUrl = response;
+				if (response.auth) {
+					this.getSavedPosts();
+				}
+				this.redditLoginUrl = response.url;
 			});
 		}
 

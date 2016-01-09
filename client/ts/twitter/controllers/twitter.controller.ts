@@ -9,7 +9,7 @@ module twitter {
 		public savedPosts = [];
 		public favorites: any;
 		public bookmarked: any;
-
+		public loadingFavorites = false;
 
 		constructor(private TwitterService: TwitterService) {
 		}
@@ -39,10 +39,13 @@ module twitter {
 		}
 
 		getFavorites() {
+			this.loadingFavorites = true;
 			this.TwitterService.getFavorites().then((tweets) => {
+				this.loadingFavorites = false;
 				this.favorites = tweets;
 			}).catch((error) => {
-				console.error(error);
+				this.loadingFavorites = false;
+				console.log(error);
 			});
 		}
 	}

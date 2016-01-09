@@ -27,32 +27,7 @@
                 </div>
             </div>
             <p>{{filteredPosts.length}} of {{ctrl.savedPosts.length}} posts</p>
-            <div class="row" data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy)">
-                <div class="col-sm-12">
-                    <div class=" visible-lg visible-md pull-left container">
-                        <img class="img-thumbnail" data-ng-if="post.thumbnail" src="{{post.thumbnail}}" alt="Thumbnail">
-                        <img class="img-thumbnail" data-ng-if="!post.thumbnail || post.thumbnail === 'self'" src="http://placehold.it/140x140" alt="Thumbnail">
-                    </div>
-                    <div class="container">
-                        <h3><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
-                        <div>
-                            <em>r/{{post.subreddit}}</em>
-                            <div class="pull-right">
-                                author: <strong>{{post.author}}</strong>
-                            </div>
-                        </div>
-                        <p data-ng-if="post.selftext">
-                            {{post.selftext}}
-                        </p>
-                        <uib-accordion>
-                            <uib-accordion-group heading="Raw Post">
-                                <pre>{{post | json:4}}
-                            </pre>
-                            </uib-accordion-group>
-                        </uib-accordion>
-                    </div>
-                </div>
-            </div>
+            <fs-reddit-post post="post" data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy)"></fs-reddit-post>
         </div>
     </div>
 </div>

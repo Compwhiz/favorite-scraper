@@ -1,1 +1,1 @@
-# favorite-scrapper
+# favorite-scraper

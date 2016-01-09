@@ -6,6 +6,7 @@
     var logger = require('morgan');
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
+    var cookieSession = require('cookie-session');
 
     // Setup localStorage
     require('./config/localstorage');
@@ -14,19 +15,21 @@
 
     // @TODO - move api keys to local config file
     
+    var app = express();
+
+    app.set('trust proxy', 1); // trust first proxy
+    
     // Configure reddit snoocore
     var reddit = require('./config/snoocore/index');
-    var redditRoutes = require('./routes/reddit/index')(reddit);
+    var redditRoutes = require('./routes/reddit/index')(reddit, app);
 
     // Configure medium client
     var mediumConfig = require('./config/medium/index');
-    var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client);
+    var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client, app);
     
     // Configure twitter client
     var twitterClient = require('./config/twitter/index');
-    var twitterRoutes = require('./routes/twitter/index')(twitterClient);
-
-    var app = express();
+    var twitterRoutes = require('./routes/twitter/index')(twitterClient, app);
 
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
@@ -39,6 +42,12 @@
         extended: true
     }));
     app.use(cookieParser());
+    
+    // Setup session
+    app.use(cookieSession({
+        name: 'session',
+        keys: ['key1', 'key2']
+    }));
 
     app.use(express.static(path.join(__dirname, '../')));
     app.use(express.static(path.join(__dirname, '../client')));

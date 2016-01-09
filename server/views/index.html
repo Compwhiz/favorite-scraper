@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="favoriteScrapper">
+<html ng-app="favoriteScraper">
 
 <head>
-  <title>Favorite Scrapper</title>
+  <title>Favorite Scraper</title>
   <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css">
   <!-- bower:css -->
   <!-- endbower -->
@@ -12,9 +12,12 @@
 </head>
 
 <body>
+  <div class="container-fluid">
+    <div class="page-header">
+      <h1>Favorite Scraper <small>all your favorites in one place</small></h1>
+    </div>
+  </div>
   <div class="container">
-    <h1>Favorite Scrapper</h1>
-    <hr/>
     <ul class="nav nav-pills">
       <li role="presentation"><a ui-sref="home">Home</a></li>
       <li role="presentation"><a ui-sref="reddit">Reddit</a></li>
@@ -30,6 +33,10 @@
   <script src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/libs/lodash/lodash.js"></script>
   <script src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/libs/angular-sanitize/angular-sanitize.js"></script>
+  <script src="/libs/moment/moment.js"></script>
+  <script src="/libs/angular-moment/angular-moment.js"></script>
+  <script src="/libs/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
   <!-- endbower -->
   <!-- inject:js -->
   <script src="/client/js/app.module.js"></script>
@@ -43,9 +50,12 @@
   <script src="/client/js/medium/services/medium.service.js"></script>
   <script src="/client/js/reddit/controllers/reddit.controller.js"></script>
   <script src="/client/js/reddit/controllers/redditAuth.controller.js"></script>
+  <script src="/client/js/reddit/directives/redditPost.directive.js"></script>
   <script src="/client/js/reddit/services/reddit.service.js"></script>
   <script src="/client/js/twitter/controllers/twitter.controller.js"></script>
   <script src="/client/js/twitter/controllers/twitterAuth.controller.js"></script>
+  <script src="/client/js/twitter/directives/tweet.directive.js"></script>
+  <script src="/client/js/twitter/directives/tweetContent.directive.js"></script>
   <script src="/client/js/twitter/services/twitter.service.js"></script>
   <!-- endinject -->
 </body>

@@ -1,5 +1,4 @@
 <div class="container">
-	<a data-ng-show="ctrl.twitterLoginUrl" href="{{ctrl.twitterLoginUrl}}">Twitter Login</a>
 	<div>
 		<a data-ng-click="ctrl.getFavorites()">Get Favorites</a>
 	</div>
@@ -12,13 +11,18 @@
 	<div>
 		<a data-ng-show="ctrl.twitterLoginUrl" href="{{ctrl.twitterLoginUrl}}">Twitter Login</a>
 	</div>
-	<table class="table">
+	{{ctrl.loadingFavorites}}
+	<p data-ng-show="ctrl.loadingFavorites">Loading...</p>
+	<!--<table class="table">
 		<tr data-ng-repeat="tweet in ctrl.favorites">
 			<td>
-				<pre>
-					{{tweet | json:4}}
-				</pre>
+				<fs-tweet tweet="tweet" ></fs-tweet>
 			</td>
 		</tr>
-	</table>
+	</table>-->
+	<div class="panel panel-default" data-ng-repeat="tweet in ctrl.favorites">
+		<div class="panel-body">
+			<fs-tweet tweet="tweet"></fs-tweet>
+		</div>
+	</div>
 </div>

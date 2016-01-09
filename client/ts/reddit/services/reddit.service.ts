@@ -16,7 +16,7 @@ module reddit {
 
 		public getLoginUrl() {
 			var url = this.apiBase + 'auth-url';
-			return this.$http.get(url).then(response => response.data);
+			return this.$http.get<any>(url).then(response => response.data);
 		}
 
 		public userLoggedIn() {

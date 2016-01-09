@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-module favoriteScrapper {
+module favoriteScraper {
 	export function Config($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider) {
 		$urlRouterProvider.otherwise('/');
 
@@ -38,14 +38,19 @@ module favoriteScrapper {
 }
 
 (() => {
-	let app = angular.module('favoriteScrapper', [
+	let app = angular.module('favoriteScraper', [
+		// Angular
+		'ngSanitize',
+		// 3rd party
 		'ui.bootstrap',
 		'ui.router',
+		'angularMoment',
+		// Project
 		'reddit',
 		'common',
 		'medium',
 		'twitter'
 	]);
 
-	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', favoriteScrapper.Config]);
+	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', favoriteScraper.Config]);
 })();

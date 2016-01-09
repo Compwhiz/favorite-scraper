@@ -9,7 +9,10 @@
     "jquery": "~2.1.4",
     "angular-ui-router": "~0.2.15",
     "lodash": "~3.10.1",
-    "angular-bootstrap": "~0.14.3"
+    "angular-bootstrap": "~0.14.3",
+    "angular-sanitize": "~1.4.8",
+    "angular-moment": "1.0.0-beta.3",
+    "moment-timezone": "~0.5.0"
   },
   "homepage": "https://github.com/arvindr21/MEAN-Todo-App",
   "authors": [
