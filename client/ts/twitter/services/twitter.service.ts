@@ -1,4 +1,4 @@
-/// <reference path="../twitter.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module twitter {
 	export class TwitterService {
@@ -17,6 +17,13 @@ module twitter {
 		public getLoginUrl() {
 			var url = this.apiBase + 'auth-url';
 			return this.$http.get(url).then(response => response.data);
+		}
+		
+		public getPassportTweets() {
+			var url = this.apiBase + 'passport';
+			return this.$http.get(url).then(response => {
+				console.log(response);
+				return response.data});
 		}
 
 		public getRequestToken() {

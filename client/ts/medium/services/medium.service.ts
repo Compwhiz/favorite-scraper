@@ -1,10 +1,10 @@
-/// <reference path="../medium.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module medium {
 	export class MediumService {
 		static $inject: string[] = ['$http', '$q'];
 		apiBase: string = '/api/medium/';
-		currentUser: User = null;
+		currentUser: any = null;
 
 		constructor(private $http: ng.IHttpService, private $q: ng.IQService) { }
 
@@ -30,7 +30,7 @@ module medium {
 				var defer = this.$q.defer();
 				var url = this.apiBase + 'me';
 				this.$http.get(url).then((response) => {
-					this.currentUser = response.data as User;
+					this.currentUser = response.data;
 					defer.resolve(this.currentUser);
 				}).catch((error) => {
 					defer.reject(error);

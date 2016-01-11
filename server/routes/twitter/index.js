@@ -53,22 +53,6 @@
           access_token_secret = accessTokenSecret;
 
           return res.send(results);
-          
-          //store accessToken and accessTokenSecret somewhere (associated to the user) 
-          //Step 4: Verify Credentials belongs here
-          
-          // twitter.verifyCredentials(accessToken, accessTokenSecret, function (error, data, response) {
-          //   if (error) {
-          //     //something was wrong with either accessToken or accessTokenSecret 
-          //     //start over with Step 1 
-          //   } else {
-          //     //accessToken and accessTokenSecret can now be used to make api-calls (not yet implemented) 
-          //     //data contains the user-data described in the official Twitter-API-docs 
-          //     //you could e.g. display his screen_name 
-          //     console.log(data["screen_name"]);
-          //   }
-          // });
-          
         }
       });
     });

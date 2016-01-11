@@ -51,7 +51,7 @@
           
           req.session.redditRefreshToken = refreshToken;
 
-          return res.send('Auth success');
+          return res.send({ auth: true });
         }).catch(function (error) {
           return res.status(500).send(error);
         });

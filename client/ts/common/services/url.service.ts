@@ -1,4 +1,4 @@
-/// <reference path="../common.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module common.services {
     export class UrlService {
@@ -72,7 +72,7 @@ module common.services {
             return ret.join("&");
         }
 
-        resetQueryStringWindow(data) {
+        resetQueryStringWindow(data?) {
             var qs = this.encodeQueryString(data);
             if (qs) {
                 qs = '?' + qs;

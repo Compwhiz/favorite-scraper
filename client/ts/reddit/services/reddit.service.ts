@@ -1,10 +1,10 @@
-/// <reference path="../reddit.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module reddit {
 	export class RedditService {
 		static $inject: string[] = ['$http', '$q'];
 		apiBase: string = '/api/reddit/';
-		currentUser: User = null;
+		currentUser: any = null;
 
 		constructor(private $http: ng.IHttpService, private $q: ng.IQService) { }
 
@@ -30,7 +30,7 @@ module reddit {
 				var defer = this.$q.defer();
 				var url = this.apiBase + 'me';
 				this.$http.get(url).then((response) => {
-					this.currentUser = response.data as User;
+					this.currentUser = response.data;
 					defer.resolve(this.currentUser);
 				}).catch((error) => {
 					defer.reject(error);

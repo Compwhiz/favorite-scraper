@@ -1,4 +1,4 @@
-/// <reference path="./common.d.ts" />
+/// <reference path="../references.d.ts" />
 
 module common {
 

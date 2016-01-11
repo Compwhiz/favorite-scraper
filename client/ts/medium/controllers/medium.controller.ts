@@ -1,5 +1,4 @@
-/// <reference path="../medium.d.ts" />
-
+/// <reference path="../../references.d.ts" />
 
 module medium {
 	export class MediumController {

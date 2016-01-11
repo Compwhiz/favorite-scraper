@@ -1,4 +1,4 @@
-/// <reference path="../reddit.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module reddit {
 	export class RedditAuthController {
@@ -7,8 +7,9 @@ module reddit {
 		constructor(private $state: ng.ui.IStateService, private RedditService: RedditService, private UrlService: common.services.UrlService) {
 			var qs = UrlService.getQueryString();
 			RedditService.login(qs.state, qs.code).then((response) => {
-				// RedditService.getCurrentUser().then((response) => {
-					$state.go('reddit');
+				// RedditService.getCurrentUser().then((response) => {	
+				UrlService.resetQueryStringWindow();
+				$state.go('reddit');
 				// }).catch((error) => {
 				// 	console.error(error);
 				// });

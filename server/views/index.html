@@ -15,16 +15,35 @@
   <div class="container-fluid">
     <div class="page-header">
       <h1>Favorite Scraper <small>all your favorites in one place</small></h1>
+      <div>
+        <fs-logout-button></fs-logout-button>
+        <fs-current-user></fs-current-user>
+      </div>
     </div>
   </div>
   <div class="container">
     <ul class="nav nav-pills">
-      <li role="presentation"><a ui-sref="home">Home</a></li>
+      <li role="presentation" class="active"><a ui-sref="home">Home</a></li>
       <li role="presentation"><a ui-sref="reddit">Reddit</a></li>
       <li role="presentation"><a ui-sref="medium">Medium</a></li>
       <li role="presentation"><a ui-sref="twitter">Twitter</a></li>
+      <li role="presentation"><a ui-sref="imgur">Imgur</a></li>
     </ul>
     <ui-view></ui-view>
+    <!--    
+    <uib-tabset>
+      <uib-tab heading="Home">
+        <div ui-view="home"></div>
+      </uib-tab>
+      <uib-tab heading="Reddit">
+        <div ui-view="reddit"></div>
+      </uib-tab>
+      <uib-tab heading="Twitter">
+        <div ui-view="twitter"></div>
+      </uib-tab>
+      <uib-tab heading="Medium">
+        <div ui-view="medium"></div>
+      </uib-tab></uib-tabset>-->
   </div>
   <!-- bower:js -->
   <script src="/libs/angular/angular.js"></script>
@@ -41,10 +60,16 @@
   <!-- inject:js -->
   <script src="/client/js/app.module.js"></script>
   <script src="/client/js/common/common.module.js"></script>
+  <script src="/client/js/imgur/imgur.module.js"></script>
   <script src="/client/js/medium/medium.module.js"></script>
   <script src="/client/js/reddit/reddit.module.js"></script>
   <script src="/client/js/twitter/twitter.module.js"></script>
+  <script src="/client/js/user/user.module.js"></script>
+  <script src="/client/js/user/user.service.js"></script>
   <script src="/client/js/common/services/url.service.js"></script>
+  <script src="/client/js/common/services/user.service.js"></script>
+  <script src="/client/js/imgur/controllers/imgur.controller.js"></script>
+  <script src="/client/js/imgur/services/imgur.service.js"></script>
   <script src="/client/js/medium/controllers/medium.controller.js"></script>
   <script src="/client/js/medium/controllers/mediumAuth.controller.js"></script>
   <script src="/client/js/medium/services/medium.service.js"></script>
@@ -57,6 +82,10 @@
   <script src="/client/js/twitter/directives/tweet.directive.js"></script>
   <script src="/client/js/twitter/directives/tweetContent.directive.js"></script>
   <script src="/client/js/twitter/services/twitter.service.js"></script>
+  <script src="/client/js/user/directives/logoutButton.directive.js"></script>
+  <script src="/client/js/user/directives/user.directive.js"></script>
+  <script src="/client/js/user/directives/userLoggedIn.directive.js"></script>
+  <script src="/client/js/user/services/user.service.js"></script>
   <!-- endinject -->
 </body>
 

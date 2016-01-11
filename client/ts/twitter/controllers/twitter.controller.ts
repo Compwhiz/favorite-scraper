@@ -1,9 +1,9 @@
-/// <reference path="../twitter.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 
 module twitter {
 	export class TwitterController {
-		static $inject = ['TwitterService'];
+		static $inject = ['TwitterService','UserService'];
 
 		public twitterLoginUrl;
 		public savedPosts = [];
@@ -11,7 +11,7 @@ module twitter {
 		public bookmarked: any;
 		public loadingFavorites = false;
 
-		constructor(private TwitterService: TwitterService) {
+		constructor(private TwitterService: TwitterService, private UserService:user.services.UserService) {
 		}
 
 		getTwitterLoginUrl() {
@@ -36,6 +36,10 @@ module twitter {
 			// }).catch((error) => {
 			// 	console.log(error);
 			// });
+		}
+		
+		getPassportTweets(){
+			this.TwitterService.getPassportTweets();
 		}
 
 		getFavorites() {

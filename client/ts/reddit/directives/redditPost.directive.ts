@@ -1,4 +1,4 @@
-/// <reference path="../reddit.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module reddit {
 	interface RedditContentScope extends ng.IScope {

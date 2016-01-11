@@ -1,4 +1,5 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="./references.d.ts" />
+	
 
 module favoriteScraper {
 	export function Config($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider) {
@@ -12,25 +13,21 @@ module favoriteScraper {
 			templateUrl: '/partials/reddit.html',
 			controller: 'RedditController',
 			controllerAs: 'ctrl'
-		}).state('redditCallback', {
-			url: '/reddit/auth/callback',
-			controller: 'RedditAuthController'
 		}).state('medium', {
 			url: '/medium',
 			templateUrl: '/partials/medium.html',
 			controller: 'MediumController',
 			controllerAs: 'ctrl'
-		}).state('mediumCallback', {
-			url: '/medium/auth/callback',
-			controller: 'MediumAuthController'
 		}).state('twitter', {
 			url: '/twitter',
 			templateUrl: '/partials/twitter.html',
 			controller: 'TwitterController',
 			controllerAs: 'ctrl'
-		}).state('twitterCallback', {
-			url: '/twitter/auth/callback',
-			controller: 'TwitterAuthController'
+		}).state('imgur', {
+			url: '/imgur',
+			templateUrl: '/partials/imgur.html',
+			controller: 'ImgurController',
+			controllerAs: 'ctrl'
 		});
 		
 		// $locationProvider.html5Mode(true);
@@ -39,17 +36,19 @@ module favoriteScraper {
 
 (() => {
 	let app = angular.module('favoriteScraper', [
-		// Angular
+	// Angular
 		'ngSanitize',
-		// 3rd party
+	// 3rd party
 		'ui.bootstrap',
 		'ui.router',
 		'angularMoment',
-		// Project
+	// Project
+		'imgur',
 		'reddit',
 		'common',
 		'medium',
-		'twitter'
+		'twitter',
+		'user'
 	]);
 
 	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', favoriteScraper.Config]);

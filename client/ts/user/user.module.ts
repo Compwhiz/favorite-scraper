@@ -1,9 +1,9 @@
 /// <reference path="../references.d.ts" />
 
-module twitter {
+module user {
 
 }
 
 (() => {
-	angular.module('twitter', []);
+	angular.module('user', []);
 })();

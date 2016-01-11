@@ -1,6 +1,7 @@
 <div class="container">
     <div>
-        <a data-ng-show="ctrl.redditLoginUrl" href="{{ctrl.redditLoginUrl}}">Reddit Login</a>
+        <a href="/login/reddit">Reddit Login</a>
+        <!--<a data-ng-show="ctrl.redditLoginUrl" href="{{ctrl.redditLoginUrl}}">Reddit Login</a>-->
         <div>
             <a data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
         </div>
@@ -27,7 +28,11 @@
                 </div>
             </div>
             <p>{{filteredPosts.length}} of {{ctrl.savedPosts.length}} posts</p>
-            <fs-reddit-post post="post" data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy)"></fs-reddit-post>
+            <div class="panel panel-default" data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy) track by post.id">
+                <div class="panel-body">
+                    <fs-reddit-post post="post"></fs-reddit-post>
+                </div>
+            </div>
         </div>
     </div>
 </div>

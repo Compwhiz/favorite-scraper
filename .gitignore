@@ -1,8 +1,8 @@
 node_modules
-coverage
-dist
+npm-debug.log
 libs
 typings
 client/js
-server/config
+server/config/secrets.js
+server/config/.env.*
 .vscode

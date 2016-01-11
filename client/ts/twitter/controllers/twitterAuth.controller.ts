@@ -1,4 +1,4 @@
-/// <reference path="../twitter.d.ts" />
+/// <reference path="../../references.d.ts" />
 
 module twitter {
 	export class TwitterAuthController {
