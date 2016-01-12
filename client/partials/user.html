@@ -1,0 +1,24 @@
+<div>
+    <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getAllUsers()">Get All Users</a>
+</div>
+<h2>Users</h2>
+<div data-ng-repeat="user in ctrl.users track by user._id">
+    <pre>
+    {{user}}
+    </pre>
+    <!--<a href="javascript:void(0)" class="btn btn-danger" data-ng-click="ctrl.delete(user._id)">Delete User</a>-->
+    <div class="container panel panel-default" data-ng-repeat="token in user.tokens">
+        <div class="row panel-body">
+            <div class="col-sm-12 col-md-9">
+                <pre>{{token}}
+                    </pre>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="javascript:void(0)" class="btn btn-danger btn-block" data-ng-click="ctrl.unlinkAccount(user._id, token.kind)">
+                    Remove {{token.kind|uppercase}} Token
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>

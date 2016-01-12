@@ -157,10 +157,14 @@
     app.get('/api/imgur/account', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.getAccount);
     app.get('/api/imgur/refresh', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.refresh);
 
+    var userController = require('./controllers/user');
+    app.get('/api/users/all', userController.all);
+    app.post('/api/users/delete', userController.delete);
+    app.post('/api/users/account/unlink', userController.unlinkAccount);
+
     app.get('/api/user', function (req, res) {
         return res.send(req.user);
     });
-
     app.get('/api/logout', function (req, res) {
         req.logout();
         return res.send(true);

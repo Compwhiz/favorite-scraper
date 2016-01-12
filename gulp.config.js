@@ -18,6 +18,7 @@ module.exports = function () {
     var bowerFiles = wd['js'];
 
     var config = {
+        allcss: client + 'css/**/*.css',
         alljs: [
             './**/*.js',
         // './*.js',
@@ -28,11 +29,11 @@ module.exports = function () {
             '!./test/**/*.js'
         ],
         bower: bower,
-        bowerWiredep:wd,
+        bowerWiredep: wd,
         bowerCSS: wd['css'],
         build: './build/',
         browserReloadDelay: 1000,
-        css: temp + 'site.css',
+        css: client + 'css/',
         client: client,
         defaultPort: '8080',
         fonts: bower.directory + 'font-awesome/fonts/**/*.*',
@@ -67,7 +68,7 @@ module.exports = function () {
         server: server,
         serverViews: serverViews,
         source: './',
-        scss: client + 'styles/site.scss',
+        scss: client + 'sass/site.scss',
         stubsjs: [
             bower.directory + 'angular-mocks/angular-mocks.js',
             client + 'stubs/**/*.js'

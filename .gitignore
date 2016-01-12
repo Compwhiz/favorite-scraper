@@ -4,5 +4,6 @@ libs
 typings
 client/js
 server/config/secrets.js
-server/config/.env.*
+server/config/dev.env
 .vscode
+client/css

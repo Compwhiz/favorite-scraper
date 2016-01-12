@@ -57,6 +57,6 @@ exports.refresh = function (req, res, next) {
 			return res.status(500).send(err);
 		}
 		console.log(body);
-		return res.send(body);
+		return res.send(JSON.parse(body));
 	});
 };

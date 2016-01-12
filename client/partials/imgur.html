@@ -1,16 +1,30 @@
 <div>
-	<a href="/login/imgur">Imgur Login</a>
+    <a href="/login/imgur">Imgur Login</a>
 </div>
 <div>
-	<a href="javascript:void(0)" data-ng-click="ctrl.getFavorites()">Get Favorites</a>
+    <a href="javascript:void(0)" data-ng-click="ctrl.getFavorites()">Get Favorites</a>
 </div>
 <div>
-	<a href="javascript:void(0)" data-ng-click="ctrl.getAccount()">Get Account</a>
+    <a href="javascript:void(0)" data-ng-click="ctrl.getAccount()">Get Account</a>
 </div>
 <div><a href="javascript:void(0)" data-ng-click="ctrl.refresh()">Refresh Token</a></div>
 <div>
-	<h2>Favorites</h2> {{ctrl.favorites}}
+    <h2>Favorites</h2>
+    <div class="panel panel-default" data-ng-repeat="post in ctrl.favorites track by post.id">
+        <div class="panel-body">
+            <!--TODO: Need to remove image extension from link-->
+            <h2><a href="{{post.link}}" target="_blank">{{post.title}}</a>&nbsp;<small><span am-time-ago="post.datetime | amFromUnix"></span></small></h2>
+            <uib-accordion data-ng-if="post.description">
+                <uib-accordion-group heading="Desciprtion">
+                    <p>
+                        {{post.description}}
+                    </p>
+                </uib-accordion-group>
+            </uib-accordion>
+            <!--<pre>{{post | json}}</pre>-->
+        </div>
+    </div>
 </div>
 <div>
-	<h2>Account</h2> {{ctrl.account}}
+    <h2>Account</h2> {{ctrl.account}}
 </div>

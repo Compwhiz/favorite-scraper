@@ -20,7 +20,7 @@ module imgur {
 
 		getFavorites() {
 			this.ImgurService.getFavorites().then(response=> {
-				this.favorites = response;
+				this.favorites = response.data;
 			}).catch(error => {
 				console.log(error);
 			});

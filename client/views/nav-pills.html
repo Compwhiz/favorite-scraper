@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <ul class="nav nav-pills">
+        <li role="presentation" data-ng-class="(currentState === state) ? 'active':''" data-ng-repeat="state in states track by state">
+            <a ui-sref="{{state}}">
+            {{state | uppercase}}</a>
+        </li>
+        <!--<li role="presentation" data-ng-class="(currentState === 'user') ? 'active':''"><a ui-sref="user">User</a></li>
+        <li role="presentation" class="active"><a ui-sref="home">Home</a></li>
+        <li role="presentation"><a ui-sref="reddit">Reddit</a></li>
+        <li role="presentation"><a ui-sref="medium">Medium</a></li>
+        <li role="presentation"><a ui-sref="twitter">Twitter</a></li>
+        <li role="presentation"><a ui-sref="imgur">Imgur</a></li>-->
+    </ul>
+</div>

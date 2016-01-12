@@ -1,99 +1,108 @@
 (function () {
-  'use strict';
+    'use strict';
 
-  var gulp = require('gulp'),
-    nodemon = require('gulp-nodemon'),
-    watch = require('gulp-watch'),
-    jshint = require('gulp-jshint'),
-    livereload = require('gulp-livereload'),
-    ts = require('gulp-typescript'),
-    inject = require('gulp-inject'),
-    count = require('gulp-count'),
-    _paths = ['server/**/*.js', 'client/js/**/*.js'];
+    var gulp = require('gulp'),
+        nodemon = require('gulp-nodemon'),
+        watch = require('gulp-watch'),
+        jshint = require('gulp-jshint'),
+        livereload = require('gulp-livereload'),
+        ts = require('gulp-typescript'),
+        inject = require('gulp-inject'),
+        // count = require('gulp-count'),
+        sass = require('gulp-sass'),
+        _paths = ['server/**/*.js', 'client/js/**/*.js'];
 
-  var config = require('./gulp.config')();
-  var wiredep = require('wiredep').stream;
-  var wiredepOptions = config.getWiredepDefaultOptions();
+    var config = require('./gulp.config')();
+    var wiredep = require('wiredep').stream;
+    var wiredepOptions = config.getWiredepDefaultOptions();
     
-  //register nodemon task
-  gulp.task('nodemon', function () {
-    nodemon({
-      script: 'server/app.js',
-      env: {
-        'NODE_ENV': 'development'
-      }
-    })
-      .on('restart');
-  });
+    //register nodemon task
+    gulp.task('nodemon', function () {
+        nodemon({
+            script: 'server/app.js',
+            env: {
+                'NODE_ENV': 'development'
+            }
+        })
+            .on('restart');
+    });
   
-  //register nodemon task
-  gulp.task('nodemon:debug', function () {
-    nodemon({
-      script: 'server/app.js',
-      env: {
-        'NODE_ENV': 'development'
-      },
-      nodeArgs: ['--debug']
-    })
-      .on('restart');
-  });
+    //register nodemon task
+    gulp.task('nodemon:debug', function () {
+        nodemon({
+            script: 'server/app.js',
+            env: {
+                'NODE_ENV': 'development'
+            },
+            nodeArgs: ['--debug']
+        })
+            .on('restart');
+    });
 
-  // Rerun the task when a file changes
-  gulp.task('watch', function () {
-    livereload.listen();
-    gulp.src(_paths, {
-      read: false
-    })
-      .pipe(watch({
-        emit: 'all'
-      }))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'));
-    watch(_paths, livereload.changed);
-  });
+    // Rerun the task when a file changes
+    gulp.task('watch', function () {
+        livereload.listen();
+        gulp.src(_paths, {
+            read: false
+        })
+            .pipe(watch({
+                emit: 'all'
+            }))
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'));
+        watch(_paths, livereload.changed);
+    });
 
-  //lint js files
-  gulp.task('lint', function () {
-    gulp.src(_paths)
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'));
-  });
+    //lint js files
+    gulp.task('lint', function () {
+        gulp.src(_paths)
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'));
+    });
 
-  gulp.task('compile:ts', function () {
-    gulp.src('./client/ts/**/*.ts')
-      .pipe(ts({
+    gulp.task('compile:ts', function () {
+        gulp.src('./client/ts/**/*.ts')
+            .pipe(ts({
 
-      }))
-      .pipe(gulp.dest('./client/js/'));
-  });
+            }))
+            .pipe(gulp.dest('./client/js/'));
+    });
 
-  gulp.task('inject:css', function () {
-    var sources = gulp.src('./client/css/**/*.css', { read: false });
+    gulp.task('compile:sass', function () {
+        gulp.src(config.scss)
+            .pipe(sass().on('on', sass.logError))
+            .pipe(gulp.dest(config.css));
+    });
 
-    return gulp.src(config.index)
-    // .pipe(wiredep(wiredepOptions))
-      .pipe(inject(sources))
-      .pipe(gulp.dest(config.serverViews));
-  });
+    gulp.task('inject:css', function () {
+        var sources = gulp.src(config.allcss, { read: false });
 
-  gulp.task('inject:js', function () {
-    var js = config.js;
-    var sources = gulp.src(js, { read: false });
+        return gulp.src(config.index)
+        // .pipe(wiredep(wiredepOptions))
+            .pipe(inject(sources))
+            .pipe(gulp.dest(config.serverViews));
+    });
 
-    return gulp.src(config.index)
-      .pipe(wiredep(wiredepOptions))
-      .pipe(inject(sources))
-      .pipe(gulp.dest(config.serverViews))
-  });
+    gulp.task('inject:js', function () {
+        var js = config.js;
+        var sources = gulp.src(js, { read: false });
 
-  gulp.task('watch:ts', function () {
-    gulp.watch('./client/ts/**/*.ts', ['build']);
-  });
+        return gulp.src(config.index)
+            .pipe(wiredep(wiredepOptions))
+            .pipe(inject(sources))
+            .pipe(gulp.dest(config.serverViews))
+    });
 
-  gulp.task('build', ['compile:ts', /*'lint',*/ 'inject:js'], function () { });
+    gulp.task('inject', ['inject:js', 'inject:css']);
 
-  // The default task (called when you run `gulp` from cli)
-  gulp.task('default', ['build', 'nodemon', 'watch']);
-  gulp.task('debug', ['build', 'nodemon:debug', 'watch']);
+    gulp.task('watch:ts', function () {
+        gulp.watch('./client/ts/**/*.ts', ['build']);
+    });
+
+    gulp.task('build', ['compile:sass', 'compile:ts', /*'lint',*/ 'inject'], function () { });
+
+    // The default task (called when you run `gulp` from cli)
+    gulp.task('default', ['build', 'nodemon', 'watch']);
+    gulp.task('debug', ['build', 'nodemon:debug', 'watch']);
 
 } ());

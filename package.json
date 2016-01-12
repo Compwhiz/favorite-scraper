@@ -1,7 +1,7 @@
 {
-  "name": "TodoApp",
+  "name": "FavoriteScraper",
   "version": "0.1.0",
-  "description": "A MEAN stack Todo App",
+  "description": "All your favorites in one place",
   "main": "server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -74,20 +74,21 @@
     "yui": "^3.18.1"
   },
   "devDependencies": {
+    "blessed": "^0.1.81",
+    "chai": "^3.4.1",
     "gulp": "^3.8.7",
     "gulp-count": "^0.1.0",
     "gulp-inject": "^3.0.0",
     "gulp-jshint": "^1.8.4",
     "gulp-livereload": "^2.1.1",
     "gulp-nodemon": "^1.0.4",
+    "gulp-sass": "^2.1.1",
     "gulp-typescript": "^2.10.0",
     "gulp-watch": "^0.6.9",
-    "wiredep": "^3.0.0",
-    "blessed": "^0.1.81",
-    "chai": "^3.4.1",
     "mocha": "^2.3.4",
     "multiline": "^1.0.2",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "wiredep": "^3.0.0"
   },
   "engines": {
     "node": "0.10.x"

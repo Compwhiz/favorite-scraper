@@ -31,7 +31,7 @@ module imgur.services {
 		}
 
 		public getFavorites() {
-			var defer = this.$q.defer();
+			var defer = this.$q.defer<any>();
 
 			this.$http.get(this.apiBase + 'favorites').then(response=> {
 				if (response.status === 200) {
