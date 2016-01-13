@@ -6,24 +6,11 @@ module reddit {
 		static $inject = ['RedditService'];
 
 		public redditLoginUrl;
-		public savedPosts = [];
+		public savedPosts;
 		public loadingSavedPosts: boolean = false;
 
 		constructor(private RedditService: RedditService) {
-			this.getRedditLoginUrl();
-		}
-
-		getRedditLoginUrl() {
-			this.RedditService.getLoginUrl().then((response) => {
-				if (response.auth) {
-					this.getSavedPosts();
-				}
-				this.redditLoginUrl = response.url;
-			});
-		}
-
-		userLoggedIn() {
-			return this.RedditService.userLoggedIn();
+			
 		}
 
 		getCurrentUser() {

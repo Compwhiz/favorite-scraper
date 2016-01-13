@@ -16,13 +16,12 @@ module common {
 
         constructor($rootScope: ng.IRootScopeService, $stateParams: ng.ui.IStateParamsService) {
             NavPillsDirective.prototype.link = (scope: NavPillsScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-                scope.states = ['user','home','reddit','twitter'/*,'medium'*/,'imgur'];
+                scope.states = ['home','reddit','twitter'/*,'medium'*/,'imgur', 'user'];
                 
                 scope.currentState = $stateParams['current'];
 
                 $rootScope.$on('$stateChangeSuccess', (event: ng.IAngularEvent, ...args: any[]) => {
                     // toState, toParams, fromState, fromParams
-                    // console.log(args);
                     scope.currentState = args[0]['name'];
                 });
             }

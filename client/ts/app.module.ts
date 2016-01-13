@@ -48,6 +48,8 @@ module favoriteScraper {
         'ui.bootstrap',
         'ui.router',
         'angularMoment',
+        'angularUtils.directives.dirPagination',
+        'infinite-scroll',
         // Project
         'imgur',
         'reddit',

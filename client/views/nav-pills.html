@@ -2,6 +2,7 @@
     <ul class="nav nav-pills">
         <li role="presentation" data-ng-class="(currentState === state) ? 'active':''" data-ng-repeat="state in states track by state">
             <a ui-sref="{{state}}">
+                <!--<span class="fa fa-{{state}}"></span>&nbsp;-->
             {{state | uppercase}}</a>
         </li>
         <!--<li role="presentation" data-ng-class="(currentState === 'user') ? 'active':''"><a ui-sref="user">User</a></li>

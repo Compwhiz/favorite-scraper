@@ -12,7 +12,7 @@ module user {
         constructor(private $rootScope: ng.IRootScopeService, private UserService: services.UserService) {
             IfUserDirective.prototype.link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
 
-                $rootScope.$watch('user', function(user) {
+                $rootScope.$watch('user', (user) => {
                     if (user) {
                         element.removeClass('ng-hide');
                     } else {

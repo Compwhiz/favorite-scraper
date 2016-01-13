@@ -26,7 +26,7 @@ exports.unlinkAccount = function (req, res, next) {
     if (req.body.id && req.body.type) {
         return User.findById(req.body.id, function (err, user) {
             if (user[req.body.type]) {
-                delete user[req.body.type];
+                user[req.body.type] = null;
                 user.markModified(req.body.type);
             }
 

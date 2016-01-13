@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Favorite Scraper</a>
+            <a class="navbar-brand" href="#">FavScraper <small>all your favs in one place</small></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,6 +36,11 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>-->
+            <ul class="nav navbar-nav navbar-right">
+                <li data-fs-if-not-user>
+                    <a href="javascript:void(0)" ui-sref="home">Login</a>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <fs-logout-button></fs-logout-button>

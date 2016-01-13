@@ -5,14 +5,15 @@
   "private": true,
   "dependencies": {
     "angular": "~1.4.8",
-    "bootstrap": "~3.3.6",
     "jquery": "~2.1.4",
     "angular-ui-router": "~0.2.15",
     "lodash": "~3.10.1",
     "angular-bootstrap": "~0.14.3",
     "angular-sanitize": "~1.4.8",
     "angular-moment": "1.0.0-beta.3",
-    "moment-timezone": "~0.5.0"
+    "moment-timezone": "~0.5.0",
+    "font-awesome": "~4.5.0",
+    "angularUtils-pagination": "angular-utils-pagination#~0.9.4"
   },
   "homepage": "https://github.com/arvindr21/MEAN-Todo-App",
   "authors": [
@@ -27,7 +28,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "client/lib",
+    "client/libs",
     "test",
     "tests"
   ]

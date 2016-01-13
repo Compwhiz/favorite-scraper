@@ -8,7 +8,7 @@
 		<div class="media-body">
 			<h3 class="media-heading">{{tweet.user.name}}&nbsp;<small><a href="{{tweet.user.url}}" target="_blank">@{{tweet.user.screen_name}}</a> <span am-time-ago="tweet.created_at"></span></small></h3>
 			<div class="well well-sm">
-				<fs-tweet-content text="::tweet.text" entities="::tweet.entities" extended-entities="::tweet.extendedEntities" show-pictures="false"></fs-tweet-content>
+				<fs-tweet-content text="{{::tweet.text}}" entities="::tweet.entities" extended-entities="::tweet.extendedEntities" show-pictures="false"></fs-tweet-content>
 			</div>
 		</div>
 	</div>

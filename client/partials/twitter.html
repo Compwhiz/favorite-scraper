@@ -1,22 +1,16 @@
 <div class="container">
-    <!--fs-user-logged-in="false"-->
-	<div><a class="btn btn-default" href="/login/twitter" >Login with Twitter</a></div>
-	<div>
-		<a data-ng-click="ctrl.getFavorites()">Get Favorites</a>
-	</div>
-	<div>
-		<a data-ng-click="ctrl.getTwitterRequestToken()">Get Request Token</a>
-	</div>
-	<div>
-		<a data-ng-click="ctrl.getTwitterLoginUrl()">Get Twitter Login</a>
-	</div>
-	<div>
-		<a data-ng-show="ctrl.twitterLoginUrl" href="{{ctrl.twitterLoginUrl}}">Twitter Login</a>
-	</div>
-	<p data-ng-show="ctrl.loadingFavorites">Loading...</p>
-	<div class="panel panel-default" data-ng-repeat="tweet in ctrl.favorites">
-		<div class="panel-body">
-			<fs-tweet tweet="tweet"></fs-tweet>
-		</div>
-	</div>
+    <!--<div>
+        <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getFavorites()">Get Favorites</a>
+    </div>-->
+    <!--<dir-pagination-controls pagination-id="tweets" boundary-links="true"></dir-pagination-controls>
+    <div dir-paginate="tweet in ctrl.favorites | itemsPerPage:5" pagination-id="tweets">
+        <fs-tweet tweet="tweet"></fs-tweet>
+    </div>
+    <dir-pagination-controls pagination-id="tweets" boundary-links="true"></dir-pagination-controls>-->
+    <div fs-infinite-scroll="ctrl.loadMoreFavorites()" infinite-scroll-disabled="ctrl.loadingFavorites || !ctrl.favorites.length">
+        <div data-ng-repeat="tweet in ctrl.favorites">
+            <fs-tweet tweet="tweet"></fs-tweet>
+        </div>
+    </div>
+    <p class="text-center lead" data-ng-show="ctrl.loadingFavorites">Loading...</p>    
 </div>

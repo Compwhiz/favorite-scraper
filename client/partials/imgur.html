@@ -16,8 +16,7 @@
             <h2><a href="{{post.link}}" target="_blank">{{post.title}}</a>&nbsp;<small><span am-time-ago="post.datetime | amFromUnix"></span></small></h2>
             <uib-accordion data-ng-if="post.description">
                 <uib-accordion-group heading="Desciprtion">
-                    <p>
-                        {{post.description}}
+                    <p data-ng-bind-html="post.description">
                     </p>
                 </uib-accordion-group>
             </uib-accordion>

@@ -85,6 +85,7 @@
     "gulp-sass": "^2.1.1",
     "gulp-typescript": "^2.10.0",
     "gulp-watch": "^0.6.9",
+    "main-bower-files": "^2.11.1",
     "mocha": "^2.3.4",
     "multiline": "^1.0.2",
     "supertest": "^1.1.0",

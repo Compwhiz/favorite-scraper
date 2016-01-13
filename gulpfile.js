@@ -10,6 +10,7 @@
         inject = require('gulp-inject'),
         // count = require('gulp-count'),
         sass = require('gulp-sass'),
+        bowerFiles = require('main-bower-files'),
         _paths = ['server/**/*.js', 'client/js/**/*.js'];
 
     var config = require('./gulp.config')();
@@ -60,6 +61,11 @@
             .pipe(jshint.reporter('default'));
     });
 
+    gulp.task('fonts', function () {
+        gulp.src(config.fonts)
+            .pipe(gulp.dest(config.fontsDir));
+    });
+
     gulp.task('compile:ts', function () {
         gulp.src('./client/ts/**/*.ts')
             .pipe(ts({
@@ -68,13 +74,13 @@
             .pipe(gulp.dest('./client/js/'));
     });
 
-    gulp.task('compile:sass', function () {
-        gulp.src(config.scss)
+    gulp.task('compile:scss', function () {
+        gulp.src([config.scss, config.bower.directory + '/font-awesome/scss/font-awesome.scss'])
             .pipe(sass().on('on', sass.logError))
             .pipe(gulp.dest(config.css));
     });
 
-    gulp.task('inject:css', function () {
+    gulp.task('inject:css', ['compile:scss'], function () {
         var sources = gulp.src(config.allcss, { read: false });
 
         return gulp.src(config.index)
@@ -93,13 +99,21 @@
             .pipe(gulp.dest(config.serverViews))
     });
 
-    gulp.task('inject', ['inject:js', 'inject:css']);
+    gulp.task('inject:bower', function () {
+        var sources = gulp.src(bowerFiles(), { read: false });
+
+        return gulp.src(config.index)
+            .pipe(inject(sources, { name: 'bower' }))
+            .pipe(gulp.dest(config.serverViews))
+    });
+
+    gulp.task('inject', ['inject:js', 'inject:bower', 'inject:css']);
 
     gulp.task('watch:ts', function () {
         gulp.watch('./client/ts/**/*.ts', ['build']);
     });
 
-    gulp.task('build', ['compile:sass', 'compile:ts', /*'lint',*/ 'inject'], function () { });
+    gulp.task('build', ['compile:scss', 'compile:ts', /*'lint',*/ 'inject'], function () { });
 
     // The default task (called when you run `gulp` from cli)
     gulp.task('default', ['build', 'nodemon', 'watch']);

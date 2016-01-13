@@ -1,12 +1,10 @@
 <div class="container">
     <div>
-        <a href="/login/reddit">Reddit Login</a>
-        <!--<a data-ng-show="ctrl.redditLoginUrl" href="{{ctrl.redditLoginUrl}}">Reddit Login</a>-->
         <div>
-            <a data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
+            <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
         </div>
         <div>
-            <a data-ng-click="ctrl.getSavedPosts()">Get Saved Posts</a>
+            <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getSavedPosts()">Get Saved Posts</a>
             <p data-ng-show="ctrl.loadingSavedPosts">
                 Loading...
             </p>

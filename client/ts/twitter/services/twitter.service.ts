@@ -41,9 +41,12 @@ module twitter {
 			return this.$http.post(url, data);
 		}
 
-		public getFavorites() {
+		public getFavorites(max_id?) {
 			var defer = this.$q.defer();
 			var url = this.apiBase + 'favorites';
+            if(max_id){
+                url += '?maxID=' + max_id;
+            }
 			this.$http.get(url).then(response => {
 				if (response.status === 200)
 					defer.resolve(response.data);

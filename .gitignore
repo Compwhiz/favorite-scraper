@@ -7,3 +7,4 @@ server/config/secrets.js
 server/config/dev.env
 .vscode
 client/css
+client/fonts
