@@ -36,12 +36,15 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>-->
-            <ul class="nav navbar-nav navbar-right">
-                <li data-fs-if-not-user>
+            <ul class="nav navbar-nav navbar-right" data-fs-if-not-user>
+                <li>
                     <a href="javascript:void(0)" ui-sref="home">Login</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" data-fs-if-user>
+                <!--<li>
+                    <fs-user-image></fs-user-image>
+                </li>-->
                 <li>
                     <fs-logout-button></fs-logout-button>
                 </li>

@@ -1,10 +1,13 @@
 node_modules
 npm-debug.log
+.vscode
+
 libs
 typings
-client/js
+
 server/config/secrets.js
 server/config/dev.env
-.vscode
+
+client/js
 client/css
 client/fonts

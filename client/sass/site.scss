@@ -1,3 +1,17 @@
 @import "bootstrap/bootstrap";
 @import "block-grid/block-grid";
 @import "social-buttons/social-buttons";
+
+div.error-messages{
+    div{
+        background-color:$brand-danger;
+        color: #fff;
+        padding: 0.5rem;
+    }
+}
+
+form.ng-submitted {
+    input.ng-invalid{
+        border: 1px solid $brand-danger;
+    }
+}

@@ -9,7 +9,7 @@ module user {
         public link: (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
         static $inject = ['$rootScope'];
 
-        constructor(private $rootScope: ng.IRootScopeService, private UserService: services.UserService) {
+        constructor(private $rootScope: ng.IRootScopeService) {
             IfUserDirective.prototype.link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
 
                 $rootScope.$watch('user', (user) => {
@@ -23,7 +23,7 @@ module user {
         }
 
         static factory() {
-            var directive = ($rootScope: ng.IRootScopeService, UserService: services.UserService) => new IfUserDirective($rootScope, UserService);
+            var directive = ($rootScope: ng.IRootScopeService) => new IfUserDirective($rootScope);
             directive.$inject = IfUserDirective.$inject;
             return directive;
         }

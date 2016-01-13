@@ -161,10 +161,12 @@
     app.get('/api/users/all', userController.all);
     app.post('/api/users/delete', userController.delete);
     app.post('/api/users/account/unlink', userController.unlinkAccount);
-
+    app.post('/api/user/update', userController.updateProfile);
+    
     app.get('/api/user', function (req, res) {
         return res.send(req.user);
     });
+
     app.get('/api/logout', function (req, res) {
         req.logout();
         return res.send(true);

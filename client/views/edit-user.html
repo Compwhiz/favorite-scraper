@@ -1,0 +1,25 @@
+<div>
+    <h2>Edit User</h2> {{ctrl.user}}
+    <form name="ctrl.formUser" data-ng-submit="ctrl.updateProfile()" novalidate>
+        <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" data-ng-model="ctrl.user.email" required>
+            <div data-ng-show="ctrl.formUser.$submitted" data-ng-messages="ctrl.formUser.userEmail.$error" class="error-messages">
+                <div data-ng-message="required">Enter your email address</div>
+                <div data-ng-message="email">Enter a valid email</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userName">Name</label>
+            <input type="text" class="form-control" id="userName" name="userName" placeholder="Name" data-ng-model="ctrl.user.profile.name">
+        </div>
+        <!--<a class="btn btn-default" data-ng-click="ctrl.undoChanges()">Undo Changes</a>-->
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+    <h3>Accounts</h3>
+    <div class="block-grid-sm-1 block-grid-lg-3">
+        <div class="block-grid-item" data-ng-repeat="token in ctrl.user.tokens track by token.kind">
+            <a class="btn btn-default btn-block btn-{{token.kind}}">{{token.kind}}</a>
+        </div>
+    </div>
+</div>

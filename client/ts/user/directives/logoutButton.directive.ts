@@ -6,7 +6,7 @@ module user {
     }
 
     export class LogoutButtonDirective {
-        public template = '<a href="javascript:void(0)" data-ng-click="logout()" data-fs-if-user>Logout</a>';
+        public template = '<a href="javascript:void(0)" data-ng-click="logout()">Logout</a>';
         public restrict = 'E';
         public replace = true;
         public scope = false;

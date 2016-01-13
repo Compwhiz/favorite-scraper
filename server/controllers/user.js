@@ -10,9 +10,30 @@ exports.all = function (req, res, next) {
     });
 };
 
+exports.updateProfile = function (req, res, next) {
+    if (req.body.id) {
+        return User.findById(req.body.id, function (err, user) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (!user) {
+                return res.status(404).send();
+            }
+            _.extend(user, req.body.user);
+            return user.save(function (err) {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                return res.send(user);
+            });
+        });
+    }
+    return res.status(400).send('No user id specified');
+};
+
 exports.delete = function (req, res, next) {
     if (req.body.id) {
-        User.findByIdAndRemove(req.body.id, function (err, doc) {
+        return User.findByIdAndRemove(req.body.id, function (err, doc) {
             if (err) {
                 return res.status(500).send(err);
             }
@@ -20,6 +41,7 @@ exports.delete = function (req, res, next) {
         });
         // console.log('Delete user ' + req.body.id);
     }
+    return res.status(400).send('No user specified')
 };
 
 exports.unlinkAccount = function (req, res, next) {
@@ -46,5 +68,5 @@ exports.unlinkAccount = function (req, res, next) {
         });
         // console.log('remove ' + req.body.type + ' token.');
     }
-    return res.status(400).send();
+    return res.status(400).send('No user/token type specified');
 }

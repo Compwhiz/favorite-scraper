@@ -34,9 +34,6 @@ module favoriteScraper {
             controller: 'UserController',
             controllerAs: 'ctrl'
         });
-            
-		
-        // $locationProvider.html5Mode(true);
     }
 }
 
@@ -44,12 +41,12 @@ module favoriteScraper {
     let app = angular.module('favoriteScraper', [
         // Angular
         'ngSanitize',
+        'ngMessages',
         // 3rd party
         'ui.bootstrap',
         'ui.router',
         'angularMoment',
         'angularUtils.directives.dirPagination',
-        'infinite-scroll',
         // Project
         'imgur',
         'reddit',

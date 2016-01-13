@@ -83,6 +83,26 @@ module user.services {
             return defer.promise;
         }
 
+        public updateProfile(user) {
+            var defer = this.$q.defer();
+
+            var data = { id: user._id, user: user };
+
+            this.$http.post(this.apiBase + 'user/update', data).then(response=> {
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    this.$rootScope.$broadcast('USER_UPDATED');
+                    defer.resolve(this.$rootScope.user);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error);
+            });
+
+            return defer.promise;
+        }
+
         public logout() {
 
             var defer = this.$q.defer();
