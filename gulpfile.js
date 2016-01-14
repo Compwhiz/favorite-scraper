@@ -110,7 +110,7 @@
     gulp.task('inject', ['inject:js', 'inject:bower', 'inject:css']);
 
     gulp.task('watch:ts', function () {
-        gulp.watch('./client/ts/**/*.ts', ['build']);
+        gulp.watch('./client/ts/**/*.ts', ['compile:ts']);
     });
 
     gulp.task('build', ['compile:scss', 'compile:ts', /*'lint',*/ 'inject'], function () { });

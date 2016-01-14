@@ -28,6 +28,9 @@ module user {
                         case 'XSMALL':
                             scope.size = 'btn-xs';
                             break;
+                        case 'BLOCK':
+                            scope.size = 'btn-block';
+                            break;
                         default:
                             scope.size = '';
                             break;

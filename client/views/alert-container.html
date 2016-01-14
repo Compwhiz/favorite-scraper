@@ -1,0 +1,5 @@
+<div class="alert-container">
+    <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type || 'warning'}}" close="closeAlert($index)" dismiss-on-timeout="{{alert.timeout || null}}">
+        {{::alert.message}}
+    </uib-alert>
+</div>

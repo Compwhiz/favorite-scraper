@@ -4,7 +4,8 @@
 <head>
     <title>FavScraper</title>
     <!-- bower:css -->
-    <!-- endbower -->
+    <link rel="stylesheet" href="/libs/toastr/toastr.css">
+    <!-- endinject -->
     <!-- inject:css -->
     <link rel="stylesheet" href="/client/css/font-awesome.css">
     <link rel="stylesheet" href="/client/css/site.css">
@@ -15,8 +16,10 @@
     <fs-nav-bar></fs-nav-bar>
     <!--<fs-current-user></fs-current-user>-->
     <div class="container-fluid">
-        <fs-nav-pills></fs-nav-pills>
-        <hr>
+        <div fs-if-user>
+            <fs-nav-pills></fs-nav-pills>
+            <hr>
+        </div>
         <div class="container">
             <ui-view></ui-view>
         </div>
@@ -32,6 +35,7 @@
     <script src="/libs/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
     <script src="/libs/angularUtils-pagination/dirPagination.js"></script>
     <script src="/libs/angular-messages/angular-messages.js"></script>
+    <script src="/libs/toastr/toastr.js"></script>
     <script src="/libs/angular-moment/angular-moment.js"></script>
     <!-- endinject -->
     <!-- inject:js -->
@@ -42,15 +46,19 @@
     <script src="/client/js/reddit/reddit.module.js"></script>
     <script src="/client/js/twitter/twitter.module.js"></script>
     <script src="/client/js/user/user.module.js"></script>
+    <script src="/client/js/common/controllers/root.controller.js"></script>
+    <script src="/client/js/common/directives/alertContainer.directive.js"></script>
+    <script src="/client/js/common/directives/compareTo.directive.js"></script>
     <script src="/client/js/common/directives/infiniteScroll.directive.js"></script>
     <script src="/client/js/common/directives/navBar.directive.js"></script>
     <script src="/client/js/common/directives/navPills.directive.js"></script>
+    <script src="/client/js/common/services/httpInterceptor.service.js"></script>
+    <script src="/client/js/common/services/notification.service.js"></script>
     <script src="/client/js/common/services/url.service.js"></script>
-    <script src="/client/js/common/controllers/root.controller.js"></script>
     <script src="/client/js/imgur/controllers/imgur.controller.js"></script>
+    <script src="/client/js/imgur/services/imgur.service.js"></script>
     <script src="/client/js/medium/controllers/medium.controller.js"></script>
     <script src="/client/js/medium/controllers/mediumAuth.controller.js"></script>
-    <script src="/client/js/imgur/services/imgur.service.js"></script>
     <script src="/client/js/medium/services/medium.service.js"></script>
     <script src="/client/js/reddit/controllers/reddit.controller.js"></script>
     <script src="/client/js/reddit/controllers/redditAuth.controller.js"></script>
@@ -61,16 +69,19 @@
     <script src="/client/js/twitter/directives/tweet.directive.js"></script>
     <script src="/client/js/twitter/directives/tweetContent.directive.js"></script>
     <script src="/client/js/twitter/services/twitter.service.js"></script>
-    <script src="/client/js/user/controllers/user.controller.js"></script>
+    <script src="/client/js/user/directives/createUser.directive.js"></script>
     <script src="/client/js/user/directives/editUser.directive.js"></script>
     <script src="/client/js/user/directives/ifNotUser.directive.js"></script>
     <script src="/client/js/user/directives/ifUser.directive.js"></script>
     <script src="/client/js/user/directives/ifUser.js"></script>
     <script src="/client/js/user/directives/linkAccountButton.directive.js"></script>
+    <script src="/client/js/user/directives/login.directive.js"></script>
     <script src="/client/js/user/directives/logoutButton.directive.js"></script>
     <script src="/client/js/user/directives/user.directive.js"></script>
     <script src="/client/js/user/directives/userImage.directive.js"></script>
     <script src="/client/js/user/directives/userLoggedIn.directive.js"></script>
+    <script src="/client/js/user/controllers/resetPassword.controller.js"></script>
+    <script src="/client/js/user/controllers/user.controller.js"></script>
     <script src="/client/js/user/services/user.service.js"></script>
     <!-- endinject -->
 </body>

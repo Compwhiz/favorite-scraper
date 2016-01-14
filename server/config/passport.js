@@ -565,7 +565,7 @@ exports.isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    res.redirect('/');
 };
 
 /**
@@ -578,6 +578,6 @@ exports.isAuthorized = function (req, res, next) {
     if (_.find(req.user.tokens, { kind: provider })) {
         next();
     } else {
-        res.redirect('/auth/' + provider);
+        res.status(403).send(provider);//redirect('/auth/' + provider);
     }
 };

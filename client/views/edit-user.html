@@ -1,25 +1,86 @@
 <div>
-    <h2>Edit User</h2> {{ctrl.user}}
-    <form name="ctrl.formUser" data-ng-submit="ctrl.updateProfile()" novalidate>
-        <div class="form-group">
-            <label for="userEmail">Email</label>
-            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" data-ng-model="ctrl.user.email" required>
-            <div data-ng-show="ctrl.formUser.$submitted" data-ng-messages="ctrl.formUser.userEmail.$error" class="error-messages">
-                <div data-ng-message="required">Enter your email address</div>
-                <div data-ng-message="email">Enter a valid email</div>
+    <div class="well">
+        <!--<pre>
+        {{ctrl.user|json}}
+        </pre>-->
+        <h2>Profile</h2>
+        <fs-alert-container alerts="ctrl.profileMessages"></fs-alert-container>
+        <form name="ctrl.formUser" data-ng-submit="ctrl.updateProfile()" novalidate>
+            <div class="form-group">
+                <label for="userEmail">Email</label>
+                <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" data-ng-model="ctrl.user.email"
+                required>
+                <div data-ng-show="ctrl.formUser.$submitted" data-ng-messages="ctrl.formUser.userEmail.$error" class="error-messages">
+                    <div data-ng-message="required">Enter your email address</div>
+                    <div data-ng-message="email">Enter a valid email</div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="userName">Name</label>
-            <input type="text" class="form-control" id="userName" name="userName" placeholder="Name" data-ng-model="ctrl.user.profile.name">
-        </div>
-        <!--<a class="btn btn-default" data-ng-click="ctrl.undoChanges()">Undo Changes</a>-->
-        <button class="btn btn-primary" type="submit">Save</button>
-    </form>
-    <h3>Accounts</h3>
-    <div class="block-grid-sm-1 block-grid-lg-3">
-        <div class="block-grid-item" data-ng-repeat="token in ctrl.user.tokens track by token.kind">
-            <a class="btn btn-default btn-block btn-{{token.kind}}">{{token.kind}}</a>
+            <div class="form-group">
+                <label for="userName">Name</label>
+                <input type="text" class="form-control" id="userName" name="userName" placeholder="Name" data-ng-model="ctrl.user.profile.name">
+            </div>
+            <div class="form-group"></div>
+            <!--<a class="btn btn-default" data-ng-click="ctrl.undoChanges()">Undo Changes</a>-->
+            <button class="btn btn-primary" type="submit" data-ng-disabled="ctrl.updatingProfile">Save</button>
+        </form>
+    </div>
+    <div class="well">
+        <h2>Password</h2>
+        <fs-alert-container alerts="ctrl.passwordMessages"></fs-alert-container>
+        <form name="ctrl.formPassword" data-ng-submit="ctrl.setOrUpdatePassword()" novalidate>
+            <div data-ng-if="ctrl.user.password">
+                <div class="form-group">
+                    <label for="userCurrentPassword">Current Password</label>
+                    <input type="password" class="form-control" id="userCurrentPassword" name="userCurrentPassword" placeholder="Current Password"
+                    data-ng-model="ctrl.passwordData.currentPassword" required>
+                    <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userCurrentPassword.$error">
+                        <div data-ng-message="required">Enter your current password</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userNewPassword">New Password</label>
+                    <input type="password" class="form-control" id="userNewPassword" name="userNewPassword" placeholder="New Password" data-ng-model="ctrl.passwordData.newPassword"
+                    required>
+                    <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userNewPassword.$error">
+                        <div data-ng-message="required">Enter a new password</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userConfirmNewPassword">Confirm New Password</label>
+                    <input type="password" class="form-control" id="userConfirmNewPassword" name="userConfirmNewPassword" placeholder="Confirm New Password"
+                    fs-compare-to="ctrl.passwordData.newPassword" data-ng-model="ctrl.passwordData.confirmNewPassword">
+                    <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userConfirmNewPassword.$error">
+                        <div data-ng-message="compareTo">Passwords don't match</div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-if="!ctrl.user.password">
+                <div class="form-group">
+                    <label for="userPassword">Set Password</label>
+                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password" data-ng-model="ctrl.passwordData.password"
+                    required>
+                    <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userPassword.$error">
+                        <div data-ng-message="required">Enter a password</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userConfirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password"
+                    fs-compare-to="ctrl.passwordData.password" data-ng-model="ctrl.passwordData.confirmPassword">
+                    <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userConfirmPassword.$error">
+                        <div data-ng-message="compareTo">Passwords don't match</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+    <div class="well">
+        <h2>Accounts</h2>
+        <div class="block-grid-sm-1 block-grid-lg-3">
+            <div class="block-grid-item" data-ng-repeat="token in ctrl.user.tokens track by token.kind">
+                <a class="btn btn-default btn-block btn-{{token.kind}}">{{token.kind | uppercase}}</a>
+            </div>
         </div>
     </div>
 </div>

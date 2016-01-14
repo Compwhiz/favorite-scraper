@@ -1,0 +1,23 @@
+<div class="well">
+    <h2>Reset Password</h2>
+    <fs-alert-container alerts="ctrl.passwordMessages"></fs-alert-container>
+    <form name="ctrl.formPassword" data-ng-submit="ctrl.resetPassword()" novalidate>
+        <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password" data-ng-model="ctrl.password"
+            required>
+            <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userPassword.$error">
+                <div data-ng-message="required">Enter a password</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password"
+            fs-compare-to="ctrl.password" data-ng-model="ctrl.confirmPassword">
+            <div data-ng-show="ctrl.formPassword.$submitted" class="error-messages" data-ng-messages="ctrl.formPassword.userConfirmPassword.$error">
+                <div data-ng-message="compareTo">Passwords don't match</div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Reset Password</button>
+    </form>
+</div>

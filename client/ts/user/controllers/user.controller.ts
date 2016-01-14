@@ -18,12 +18,12 @@ module user {
         }
 
         public delete(id) {
-            this.UserService.delete(id).then(response=> {
-                console.log(response);
-                this.getAllUsers();
-            }).catch(error=> {
-                console.log(error);
-            });
+            // this.UserService.delete(id).then(response=> {
+            //     console.log(response);
+            //     this.getAllUsers();
+            // }).catch(error=> {
+            //     console.log(error);
+            // });
         }
 
         public unlinkAccount(id, type) {

@@ -14,12 +14,14 @@
     var MongoStore = require('connect-mongo/es5')(session);
     var flash = require('express-flash');
     var crypto = require('crypto');
+    var expressValidator = require('express-validator');
 
     dotenv.load({ path: 'server/config/dev.env' });
 
     var passportConf = require('./config/passport');
 
     var app = express();
+
         
     // Connect to MongoDB.
     mongoose.connect(process.env.MONGODB || process.env.MODULUS_URI);
@@ -53,6 +55,7 @@
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+    app.use(expressValidator());
     app.use(flash());
         
     // Setup session
@@ -158,11 +161,17 @@
     app.get('/api/imgur/refresh', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.refresh);
 
     var userController = require('./controllers/user');
-    app.get('/api/users/all', userController.all);
-    app.post('/api/users/delete', userController.delete);
-    app.post('/api/users/account/unlink', userController.unlinkAccount);
-    app.post('/api/user/update', userController.updateProfile);
-    
+    app.get('/api/user/all', userController.all);
+    // app.post('/api/user/delete', userController.delete);
+    app.post('/api/user/forgotpassword', userController.postForgot);
+    app.post('/api/user/create', userController.createUser);
+    app.post('/api/user/account/unlink', passportConf.isAuthenticated, userController.unlinkAccount);
+    app.post('/api/user/update', passportConf.isAuthenticated, userController.updateProfile);
+    app.post('/api/user/password', passportConf.isAuthenticated, userController.setPassword);
+    app.post('/api/user/password/reset', userController.resetPassword);
+    app.post('/api/user/login', userController.postLogin);
+    app.post('/api/user/validateResetToken', userController.validateResetToken);
+
     app.get('/api/user', function (req, res) {
         return res.send(req.user);
     });

@@ -20,7 +20,7 @@ module user.services {
         public getAllUsers() {
             var defer = this.$q.defer();
 
-            this.$http.get(this.apiBase + 'users/all').then((response) => {
+            this.$http.get(this.apiBase + 'user/all').then((response) => {
                 if (response.status === 200)
                 { defer.resolve(response.data); }
                 else { defer.reject(response.data); }
@@ -31,12 +31,15 @@ module user.services {
             return defer.promise;
         }
 
-        public delete(id) {
+        public login(data) {
             var defer = this.$q.defer();
 
-            this.$http.post(this.apiBase + 'users/delete', { id: id }).then(response=> {
-                if (response.status === 200)
-                { defer.resolve(response.data); }
+            this.$http.post(this.apiBase + 'user/login', data).then((response) => {
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    this.$rootScope.$broadcast('USER_LOGGED_IN');
+                    defer.resolve(this.$rootScope.user);
+                }
                 else { defer.reject(response.data); }
             }).catch(error=> {
                 defer.reject(error.data);
@@ -44,11 +47,42 @@ module user.services {
 
             return defer.promise;
         }
+
+        public createUser(data) {
+            var defer = this.$q.defer();
+
+            this.$http.post(this.apiBase + 'user/create', data).then((response) => {
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    this.$rootScope.$broadcast('USER_CREATED');
+                    defer.resolve(this.$rootScope.user);
+                }
+                else { defer.reject(response.data); }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+
+        // public delete(id) {
+        //     var defer = this.$q.defer();
+
+        //     this.$http.post(this.apiBase + 'user/delete', { id: id }).then(response=> {
+        //         if (response.status === 200)
+        //         { defer.resolve(response.data); }
+        //         else { defer.reject(response.data); }
+        //     }).catch(error=> {
+        //         defer.reject(error.data);
+        //     });
+
+        //     return defer.promise;
+        // }
 
         public unlinkAccount(id, type) {
             var defer = this.$q.defer();
 
-            this.$http.post(this.apiBase + 'users/account/unlink', { id: id, type: type }).then(response=> {
+            this.$http.post(this.apiBase + 'user/account/unlink', { id: id, type: type }).then(response=> {
                 if (response.status === 200)
                 { defer.resolve(response.data); }
                 else { defer.reject(response.data); }
@@ -77,7 +111,7 @@ module user.services {
                         defer.reject(response.data);
                     }
                 }).catch(error=> {
-                    defer.reject(error);
+                    defer.reject(error.data);
                 });
             }
             return defer.promise;
@@ -97,7 +131,43 @@ module user.services {
                     defer.reject(response.data);
                 }
             }).catch(error=> {
-                defer.reject(error);
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+
+        public setPassword(data) {
+            var defer = this.$q.defer();
+
+            this.$http.post(this.apiBase + 'user/password', data).then(response=> {
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    this.$rootScope.$broadcast('USER_PASSWORD_UPDATED');
+                    defer.resolve(this.$rootScope.user);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+
+        public resetPassword(token, password) {
+            var defer = this.$q.defer();
+
+            this.$http.post(this.apiBase + 'user/password/reset', { token: token, password: password }).then(response=> {
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    this.$rootScope.$broadcast('USER_PASSWORD_RESET');
+                    defer.resolve(this.$rootScope.user);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
             });
 
             return defer.promise;
@@ -111,6 +181,39 @@ module user.services {
                 if (response.status === 200) {
                     this.$rootScope.user = null;
                     this.$rootScope.$broadcast('USER_LOGOUT');
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+
+        public sendForgotPasswordEmail(email) {
+            var defer = this.$q.defer();
+
+            this.$http.post(this.apiBase + 'user/forgotpassword', { email: email }).then(response=> {
+                if (response.status === 200) {
+                    this.$rootScope.$broadcast('USER_FORGOTPASSWORD_EMAIL_SENT');
+                    defer.resolve(true);
+                } else {
+                    defer.reject(false);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+
+        public validateResetToken(token) {
+            var defer = this.$q.defer();
+
+            this.$http.post(this.apiBase + 'user/validateResetToken', { token: token }).then(response=> {
+                if (response.status === 200) {
                     defer.resolve(response.data);
                 } else {
                     defer.reject(response.data);

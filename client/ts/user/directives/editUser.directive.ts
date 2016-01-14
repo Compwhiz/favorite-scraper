@@ -24,11 +24,19 @@ module user {
     }
 
     class EditUserDirectiveController {
-        static $inject = ['$rootScope', 'UserService'];
+        static $inject = ['$rootScope', 'UserService', 'NotificationService'];
+
+        // Fields
         public user;
         public formUser: ng.IFormController;
+        public formPassword: ng.IFormController;
+        public passwordData = {};
+        public profileMessages = [];
+        public passwordMessages = [];
+        public updatingProfile = false;
+        public updatingPassword = false;
 
-        constructor(private $rootScope: any, private UserService: services.UserService) {
+        constructor(private $rootScope: any, private UserService: services.UserService, private NotificationService: common.services.NotificationService) {
             this.user = angular.copy($rootScope.user);
         }
 
@@ -37,14 +45,54 @@ module user {
         }
 
         public updateProfile() {
+            this.profileMessages = [];
+
             if (!this.formUser.$valid) {
                 return;
             }
+            this.updatingProfile = true;
             this.UserService.updateProfile(this.user).then(response=> {
-                console.log('Updated profile');
-                console.log(response);
+                // this.NotificationService.showSuccess('Profile updated');
+                this.updatingProfile = false;
+                this.addMessage(this.profileMessages, { message: 'Profile updated', timeout: 2500 });
             }).catch(error=> {
-                console.log(error);
+                this.updatingProfile = false;
+                this.addMessage(this.profileMessages, error, 'danger');
+            });
+        }
+
+        public setOrUpdatePassword() {
+            this.passwordMessages = [];
+
+            if (!this.formPassword.$valid) {
+                return;
+            }
+            this.updatingPassword = true;
+            this.UserService.setPassword(this.passwordData).then(response=> {
+                // this.NotificationService.showSuccess('Password updated');
+                this.formPassword.$setPristine();
+                this.updatingPassword = false;
+                this.addMessage(this.passwordMessages, { message: 'Password updated', timeout: 2500 });
+            }).catch(error=> {
+                this.updatingPassword = false;
+                this.addMessage(this.passwordMessages, error, 'danger');
+            });
+        }
+
+        private addMessage(list: any[], msg, type = 'success') {
+            if (!Array.isArray(msg)) {
+                msg = [msg];
+            }
+
+            angular.forEach(msg, m => {
+                var obj: any = {};
+                if (typeof m === 'string') {
+                    obj.message = m;
+                } else {
+                    _.extend(obj, m);
+                }
+                obj.type = obj.type || type;
+                list.push(obj);
             });
         }
     }

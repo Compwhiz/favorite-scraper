@@ -9,7 +9,7 @@ var userSchema = new mongoose.Schema({
     facebook: String,
     twitter: String,
     reddit: String,
-    imgur:String,
+    imgur: String,
     google: String,
     github: String,
     instagram: String,
@@ -62,6 +62,21 @@ userSchema.methods.comparePassword = function (candidatePassword, cb) {
         cb(null, isMatch);
     });
 };
+
+/**
+ * Helper method for setting user's password
+ */
+userSchema.methods.updatePassword = function (currentPassword, newPassword, cb) {
+    userSchema.methods.comparePassword(currentPassword, function (err, match) {
+        if (err) {
+            return cb(err);
+        } else if (!match) {
+            return cb(null, false);
+        }
+        this.password = newPassword;
+        cb(null, true);
+    });
+}
 
 /**
  * Helper method for getting user's gravatar.

@@ -1,6 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 /// <reference path="./common/common.module.ts" />
 /// <reference path="./common/services/url.service.ts" />
+/// <reference path="./common/services/notification.service.ts" />
 /// <reference path="./medium/medium.module.ts" />
 /// <reference path="./medium/services/medium.service.ts" />
 /// <reference path="./reddit/reddit.module.ts" />

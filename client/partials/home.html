@@ -1,9 +1,25 @@
 <div class="container-fluid">
     <h1>Use FavScraper to view all your favorited posts/article/tweets from around the web.</h1>
-    <h3>To get started, log in and link up your social network accounts</h3>
+    <h3>Create an account or login with social media and link up all your other accounts</h3>
     <div class="well">
-        <fs-link-account-button type="reddit" size="large"></fs-link-account-button>
-        <fs-link-account-button type="twitter" size="large"></fs-link-account-button>
-        <fs-link-account-button type="imgur" size="large"></fs-link-account-button>
+        <div class="block-grid-sm-2 block-grid-lg-3">
+            <div class="block-grid-item">
+                <fs-link-account-button type="reddit" size="block"></fs-link-account-button>
+            </div>
+            <div class="block-grid-item">
+                <fs-link-account-button type="twitter" size="block"></fs-link-account-button>
+            </div>
+            <div class="block-grid-item">
+                <fs-link-account-button type="imgur" size="block"></fs-link-account-button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <a href="javascript:void(0)" data-ui-sref="signup" class="btn btn-primary btn-lg btn-block">Sign Up</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a href="javascript:void(0)" data-ui-sref="login" class="btn btn-default btn-lg btn-block">Log In</a>
+        </div>
     </div>
 </div>

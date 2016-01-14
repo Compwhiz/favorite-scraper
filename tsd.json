@@ -9,13 +9,16 @@
       "commit": "ec3ddd75c4eeeee72e7670db90abea54cd6fe82a"
     },
     "jquery/jquery.d.ts": {
-      "commit": "ec3ddd75c4eeeee72e7670db90abea54cd6fe82a"
+      "commit": "1984ea435fe9e93a012d50db7773db58ae5d494b"
     },
     "angular-ui-router/angular-ui-router.d.ts": {
       "commit": "ec3ddd75c4eeeee72e7670db90abea54cd6fe82a"
     },
     "lodash/lodash.d.ts": {
       "commit": "f11e49cfb77f99678657ddfe5d43017849675c64"
+    },
+    "toastr/toastr.d.ts": {
+      "commit": "1984ea435fe9e93a012d50db7773db58ae5d494b"
     }
   }
 }
