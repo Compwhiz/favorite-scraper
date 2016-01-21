@@ -6,7 +6,7 @@ module common {
     }
 
     export class NavBarDirective {
-        public templateUrl = 'client/views/nav-bar.html';
+        public templateUrl = 'views/nav-bar.html';
         public restrict = 'E';
         public scope = false;
         static $inject = [];

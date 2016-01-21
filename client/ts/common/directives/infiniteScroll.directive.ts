@@ -77,7 +77,7 @@ module common {
                         elementBottom = height((element[0].ownerDocument || element[0]['document']).documentElement);
                     }
                     remaining = elementBottom - containerBottom;
-                    shouldScroll = remaining <= height(container) * scrollDistance + 1;
+                    shouldScroll = (remaining <= height(container) * scrollDistance + 1);
                     if (shouldScroll) {
                         checkWhenEnabled = true;
                         if (scrollEnabled) {

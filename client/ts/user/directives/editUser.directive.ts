@@ -2,7 +2,7 @@
 
 module user {
     export class EditUserDirective {
-        public templateUrl = 'client/views/edit-user.html';
+        public templateUrl = 'views/edit-user.html';
         public restrict = 'E';
         public controller = EditUserDirectiveController;
         public controllerAs = 'ctrl';

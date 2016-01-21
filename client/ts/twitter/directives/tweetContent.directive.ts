@@ -10,7 +10,7 @@ module twitter {
     }
 
     export class TweetContentDirective {
-        public templateUrl = 'client/views/tweet-content.html';
+        public templateUrl = 'views/tweet-content.html';
         public restrict = 'E';
         public scope = { text: '@', entities: '=', extendedEntities: '=', showPictures: '=' };
         public link: (scope: TweetContentScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;

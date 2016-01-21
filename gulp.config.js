@@ -1,6 +1,7 @@
 module.exports = function () {
     var client = './client/';
     var server = './server/';
+    var build = './build/';
     var serverViews = server + 'views/';
     var clientApp = client;// + 'app/';
     var wiredep = require('wiredep');
@@ -28,18 +29,24 @@ module.exports = function () {
             '!./report/**/*.js',
             '!./test/**/*.js'
         ],
+        allClientJs: client + '**/*.js',
+        allClientTs: client + 'ts/**/*.ts',
         bower: bower,
         bowerWiredep: wd,
         bowerCSS: wd['css'],
-        build: './build/',
+        build: build,
+        buildCss: build + 'css/',
+        buildJs: build + 'js',
+        buildFontsDir: build + 'fonts',
         browserReloadDelay: 1000,
         css: client + 'css/',
         client: client,
+        clientJs: client + 'js/',
         defaultPort: '8080',
         fonts: bower.directory + '/font-awesome/fonts/**/*.*',
         fontsDir: client + 'fonts',
-        htmltemplates: clientApp + '**/*.html',
-        index: serverViews + 'index.html',
+        htmltemplates: [client + '**/*.html', '!' + client + 'index.html'],
+        index: client + 'index.html',
         images: client + 'images/**/*.*',
         js: [
             clientApp + '**/*.module.js',

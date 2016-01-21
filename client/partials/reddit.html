@@ -1,14 +1,8 @@
 <div class="container">
     <div>
         <div>
-            <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getCurrentUser()">Get Current User</a>
-        </div>
-        <div>
-            <a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getSavedPosts()">Get Saved Posts</a>
-            <p data-ng-show="ctrl.loadingSavedPosts">
-                Loading...
-            </p>
-            <div>
+            <!--<a href="javascript:void(0)" class="btn btn-default" data-ng-click="ctrl.getSavedPosts()">Get Saved Posts</a>-->
+            <!--<div>
                 <label>
                     <input type="radio" ng-model="ctrl.orderBy" value="">None
                 </label>
@@ -25,12 +19,17 @@
                     {{ctrl.orderBy}}
                 </div>
             </div>
-            <p>{{filteredPosts.length}} of {{ctrl.savedPosts.length}} posts</p>
-            <div class="panel panel-default" data-ng-repeat="post in filteredPosts = (ctrl.savedPosts | orderBy: ctrl.orderBy) track by post.id">
-                <div class="panel-body">
-                    <fs-reddit-post post="post"></fs-reddit-post>
+            <p>{{filteredPosts.length}} of {{ctrl.savedPosts.length}} posts</p>-->
+            <div fs-infinite-scroll="ctrl.loadMoreSavedPosts()" infinite-scroll-disabled="ctrl.loadingSavedPosts || !ctrl.savedPosts.length">
+                <div data-ng-repeat="post in ctrl.savedPosts track by post.id">
+                    <!--<div class="panel-body">-->
+                        <fs-reddit-post post="post"></fs-reddit-post>
+                    <!--</div>-->
                 </div>
             </div>
+            <p class="text-center lead" data-ng-show="ctrl.loadingSavedPosts">
+                Loading...
+            </p>
         </div>
     </div>
 </div>

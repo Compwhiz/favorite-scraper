@@ -2,15 +2,19 @@
 
 module user {
     export class ResetPasswordController {
-        static $inject = ['$state','UserService', 'token'];
+        static $inject = ['$state', 'UserService', 'token'];
         public password;
-        public token;
-        
-        constructor(private $state:ng.ui.IStateService, private UserService: services.UserService, token: string) {
+        public formPassword: ng.IFormController;
+
+        constructor(private $state: ng.ui.IStateService, private UserService: services.UserService, private token: string) {
 
         }
 
-        public resetPassword(id, type) {
+        public resetPassword() {
+            if (!this.formPassword.$valid) {
+                return;
+            }
+            
             this.UserService.resetPassword(this.password, this.token).then(response=> {
                 this.$state.go('user');
             }).catch(error=> {

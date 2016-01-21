@@ -155,7 +155,7 @@ module user.services {
             return defer.promise;
         }
 
-        public resetPassword(token, password) {
+        public resetPassword(password, token) {
             var defer = this.$q.defer();
 
             this.$http.post(this.apiBase + 'user/password/reset', { token: token, password: password }).then(response=> {

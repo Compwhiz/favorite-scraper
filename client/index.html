@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html data-ng-app="favoriteScraper" data-ng-strict-di>
+
+<head>
+    <title>FavScraper</title>
+    <!-- build-vendor:css -->
+    <!-- endinject -->
+    <!-- build-app:css -->
+    <!-- endinject -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/libs/toastr/toastr.css">
+    <link rel="stylesheet" href="/libs/angular-loading-bar/build/loading-bar.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/client/css/font-awesome.css">
+    <link rel="stylesheet" href="/client/css/site.css">
+    <!-- endinject -->
+</head>
+
+<body data-ng-controller="RootController as rootCtrl">
+    <fs-nav-bar></fs-nav-bar>
+    <!--<fs-current-user></fs-current-user>-->
+    <div class="container-fluid">
+        <div fs-if-user>
+            <fs-nav-pills></fs-nav-pills>
+            <hr>
+        </div>
+        <div class="container">
+            <ui-view></ui-view>
+        </div>
+    </div>
+    <!-- bower:js -->
+    <script src="/libs/angular/angular.js"></script>
+    <script src="/libs/jquery/dist/jquery.js"></script>
+    <script src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/libs/lodash/lodash.js"></script>
+    <script src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/libs/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/libs/moment/moment.js"></script>
+    <script src="/libs/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="/libs/angularUtils-pagination/dirPagination.js"></script>
+    <script src="/libs/angular-messages/angular-messages.js"></script>
+    <script src="/libs/toastr/toastr.js"></script>
+    <script src="/libs/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="/libs/angular-moment/angular-moment.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="/client/js/app.module.js"></script>
+    <script src="/client/js/common/common.module.js"></script>
+    <script src="/client/js/imgur/imgur.module.js"></script>
+    <script src="/client/js/medium/medium.module.js"></script>
+    <script src="/client/js/reddit/reddit.module.js"></script>
+    <script src="/client/js/twitter/twitter.module.js"></script>
+    <script src="/client/js/user/user.module.js"></script>
+    <script src="/client/js/common/controllers/root.controller.js"></script>
+    <script src="/client/js/common/directives/alertContainer.directive.js"></script>
+    <script src="/client/js/common/directives/compareTo.directive.js"></script>
+    <script src="/client/js/common/directives/infiniteScroll.directive.js"></script>
+    <script src="/client/js/common/directives/navBar.directive.js"></script>
+    <script src="/client/js/common/directives/navPills.directive.js"></script>
+    <script src="/client/js/common/services/httpInterceptor.service.js"></script>
+    <script src="/client/js/common/services/notification.service.js"></script>
+    <script src="/client/js/common/services/url.service.js"></script>
+    <script src="/client/js/imgur/controllers/imgur.controller.js"></script>
+    <script src="/client/js/imgur/services/imgur.service.js"></script>
+    <script src="/client/js/medium/controllers/medium.controller.js"></script>
+    <script src="/client/js/medium/controllers/mediumAuth.controller.js"></script>
+    <script src="/client/js/medium/services/medium.service.js"></script>
+    <script src="/client/js/reddit/controllers/reddit.controller.js"></script>
+    <script src="/client/js/reddit/directives/redditPost.directive.js"></script>
+    <script src="/client/js/reddit/services/reddit.service.js"></script>
+    <script src="/client/js/twitter/controllers/twitter.controller.js"></script>
+    <script src="/client/js/twitter/controllers/twitterAuth.controller.js"></script>
+    <script src="/client/js/twitter/directives/tweet.directive.js"></script>
+    <script src="/client/js/twitter/directives/tweetContent.directive.js"></script>
+    <script src="/client/js/twitter/services/twitter.service.js"></script>
+    <script src="/client/js/user/controllers/resetPassword.controller.js"></script>
+    <script src="/client/js/user/controllers/user.controller.js"></script>
+    <script src="/client/js/user/directives/createUser.directive.js"></script>
+    <script src="/client/js/user/directives/editUser.directive.js"></script>
+    <script src="/client/js/user/directives/ifNotUser.directive.js"></script>
+    <script src="/client/js/user/directives/ifUser.directive.js"></script>
+    <script src="/client/js/user/directives/linkAccountButton.directive.js"></script>
+    <script src="/client/js/user/directives/login.directive.js"></script>
+    <script src="/client/js/user/directives/logoutButton.directive.js"></script>
+    <script src="/client/js/user/directives/socialLogin.directive.js"></script>
+    <script src="/client/js/user/directives/user.directive.js"></script>
+    <script src="/client/js/user/directives/userImage.directive.js"></script>
+    <script src="/client/js/user/services/user.service.js"></script>
+    <!-- endinject -->
+    <!-- build-vendor:js -->
+    <!-- endinject -->
+    <!-- build-app:js -->
+    <!-- endinject -->
+    <!-- build-templates:js -->
+    <!-- endinject -->
+</body>
+
+</html>

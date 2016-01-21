@@ -7,7 +7,7 @@ module common {
     }
 
     export class AlertContainerDirective {
-        public templateUrl = 'client/views/alert-container.html';
+        public templateUrl = 'views/alert-container.html';
         public restrict = 'E';
         public scope = { alerts: '=' };
         static $inject = [];

@@ -2,7 +2,7 @@
 
 module user {
     export class LoginDirective {
-        public templateUrl = 'client/views/login.html';
+        public templateUrl = 'views/login.html';
         public restrict = 'E';
         public controller = LoginDirectiveController;
         public controllerAs = 'ctrl';

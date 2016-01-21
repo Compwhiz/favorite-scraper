@@ -7,7 +7,7 @@ module common {
     }
 
     export class NavPillsDirective {
-        public templateUrl = 'client/views/nav-pills.html';
+        public templateUrl = 'views/nav-pills.html';
         public restrict = 'E';
         public scope = false;
         static $inject = ['$rootScope', '$state'];
@@ -16,7 +16,7 @@ module common {
 
         constructor($rootScope: ng.IRootScopeService, $stateParams: ng.ui.IStateParamsService) {
             NavPillsDirective.prototype.link = (scope: NavPillsScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-                scope.states = ['home','reddit','twitter'/*,'medium'*/,'imgur', 'user'];
+                scope.states = [/*'home',*/'reddit','twitter'/*,'medium'*/,'imgur', 'user'];
                 
                 scope.currentState = $stateParams['current'];
 

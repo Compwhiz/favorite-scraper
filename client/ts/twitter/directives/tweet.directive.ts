@@ -6,7 +6,7 @@ module twitter {
 	}
 
 	export class TweetDirective {
-		public templateUrl = 'client/views/tweet.html';
+		public templateUrl = 'views/tweet.html';
 		public restrict = 'E';
 		public scope = { tweet: '=' };
 		public link: (scope: TweetScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;

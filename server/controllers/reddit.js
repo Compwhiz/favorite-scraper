@@ -1,18 +1,14 @@
-var Snoocore;
-var reddit = null;
+var request = require('request');
+var _ = require('lodash');
 
-function getRedditInstance(req) {
-  if (req.user.profile.redditUsername) {
-    Snoocore = require('snoocore');
-
-    reddit = new Snoocore({
-      // Unique string identifying the app
-      userAgent: process.env.REDDIT_USER_AGENT,
-      // useBrowserCookies: true,
-      // It's possible to adjust throttle less than 1 request per second.
-      // Snoocore will honor rate limits if reached.
-      throttle: 300,
-      oauth: {
+var Snoocore = require('snoocore')
+var reddit = new Snoocore({
+    // Unique string identifying the app
+    userAgent: process.env.REDDIT_USER_AGENT,
+    // It's possible to adjust throttle less than 1 request per second.
+    // Snoocore will honor rate limits if reached.
+    throttle: 300,
+    oauth: {
         type: 'explicit',
         redirectUri: 'http://localhost:3000/#/reddit/auth/callback',
         duration: 'permanent',
@@ -22,33 +18,38 @@ function getRedditInstance(req) {
         // want. The reddit documentation will specify which scope
         // is needed for evey call
         scope: ['identity', 'read', 'history']
-      }
-    });
-  } else {
-    reddit = null;
-  }
+    }
+});
 
-  return reddit;
+function setAccessToken(user) {
+    var redditToken = _.find(user.tokens, { kind: 'reddit' });
+
+    reddit.setAccessToken(redditToken.accessToken);
 }
 
 exports.getSavedPosts = function (req, res, next) {
-  if (getRedditInstance(req)) {
-    return reddit('/u/' + req.user.profile.redditUsername + '/saved').get().then(function (result) {
-      return res.send(result);
+    setAccessToken(req.user);
+
+    var options = {};
+    
+    if (req.query.after) {
+        options.after = req.query.after;
+    }
+
+    reddit('/u/' + req.user.profile.redditUsername + '/saved').get(options).then(function (result) {
+        res.send(result);
     }).catch(function (error) {
-      return res.status(500).send(error);
+        res.status(500).send(error);
     });
-  }
-  return res.status(400).send('No reddit user found');
 };
 
 exports.getCurrentUser = function (req, res, next) {
-  if (getRedditInstance(req)) {
-    return reddit('/api/v1/me').get().then(function (result) {
-      return res.send(result);
-    }).catch(function (error) {
-      return res.status(500).send(error);
-    });
-  }
-  return res.status(400).send('No reddit user found');
+    // if (getRedditInstance(req)) {
+    //     return reddit('/api/v1/me').get().then(function (result) {
+    //         return res.send(result);
+    //     }).catch(function (error) {
+    //         return res.status(500).send(error);
+    //     });
+    // }
+    return res.status(400).send('No reddit user found');
 };

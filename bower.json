@@ -15,7 +15,8 @@
     "font-awesome": "~4.5.0",
     "angularUtils-pagination": "angular-utils-pagination#~0.9.4",
     "angular-messages": "~1.4.8",
-    "toastr": "~2.1.2"
+    "toastr": "~2.1.2",
+    "angular-loading-bar": "~0.8.0"
   },
   "homepage": "https://github.com/arvindr21/MEAN-Todo-App",
   "authors": [

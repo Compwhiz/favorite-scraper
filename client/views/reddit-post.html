@@ -1,26 +1,31 @@
-<div class="container-fluid">
-	<div class="media">
-		<div class="media-left">
-			<a href="{{post.url}}" target="_blank">
-				<img class="media-object img-rounded" src="{{post.thumbnail}}" alt="Thumbnail" style="min-width:140px;">
-			</a>
-		</div>
-		<div class="media-body">
-			<h3 class="media-heading"><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
-			<div>
-				submitted <span am-time-ago="post.created | amFromUnix"></span> by
-				<a href="https://www.reddit.com/user/{{post.author}}" target="_blank">{{post.author}}</a> to
-				<a href="https://www.reddit.com/r/{{post.subreddit}}" target="_blank">r/{{post.subreddit}}</a>
-			</div>
-			<p data-ng-if="post.selftext">
-				{{post.selftext}}
-			</p>
-			<uib-accordion>
-				<uib-accordion-group heading="Raw Post">
-					<pre>{{post | json:4}}
+<div class="container-fluid well">
+    <div class="media">
+        <div class="media-left">
+            <a href="{{post.url}}" target="_blank">
+                <div data-ng-switch="post.thumbnail">
+                    <div data-ng-switch-when="self" class="reddit-thumbnail self"></div>
+                    <div data-ng-switch-when="default" class="reddit-thumbnail default"></div>
+                    <div data-ng-switch-when="" class="reddit-thumbnail default"></div>
+                    <img data-ng-switch-default data-ng-src="{{post.thumbnail}}" alt="Thumbnail" class="reddit-thumbnail">
+                </div>
+            </a>
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading"><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
+            <div>
+                submitted <span am-time-ago="post.created | amFromUnix"></span> by
+                <a href="https://www.reddit.com/user/{{post.author}}" target="_blank">{{post.author}}</a> to
+                <a href="https://www.reddit.com/r/{{post.subreddit}}" target="_blank">r/{{post.subreddit}}</a>
+            </div>
+            <p data-ng-if="post.selftext">
+                {{post.selftext}}
+            </p>
+        </div>
+    </div>
+    <!--<uib-accordion>
+        <uib-accordion-group heading="Raw Post">
+            <pre>{{post | json:4}}
                             </pre>
-				</uib-accordion-group>
-			</uib-accordion>
-		</div>
-	</div>
+        </uib-accordion-group>
+    </uib-accordion>-->
 </div>

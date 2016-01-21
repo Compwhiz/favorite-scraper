@@ -11,3 +11,4 @@ server/config/dev.env
 client/js
 client/css
 client/fonts
+build/

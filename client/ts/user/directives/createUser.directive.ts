@@ -2,7 +2,7 @@
 
 module user {
     export class CreateUserDirective {
-        public templateUrl = 'client/views/create-user.html';
+        public templateUrl = 'views/create-user.html';
         public restrict = 'E';
         public controller = CreateUserDirectiveController;
         public controllerAs = 'ctrl';

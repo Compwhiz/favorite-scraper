@@ -166,7 +166,7 @@ exports.resetPassword = function (req, res, next) {
         else if (!user) {
             return res.status(404).send();
         }
-        else if (user.resetPasswordExpires > Date.now()) {
+        else if (user.resetPasswordExpires < Date.now()) {
             return res.status(400).send('Token expired');
         }
 
@@ -266,7 +266,7 @@ exports.postForgot = function (req, res, next) {
                 subject: 'Reset your FavScraper password',
                 html: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
                 'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                'http://' + req.headers.host + '/#/reset/' + token + '\n\n' +
+                'http://' + req.headers.host + '/#/reset?token=' + token + '\n\n' +
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
             mailgun.messages().send(mailOptions, function (err, body) {
