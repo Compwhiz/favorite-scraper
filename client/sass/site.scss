@@ -2,6 +2,10 @@
 @import "block-grid/block-grid";
 @import "social-buttons/social-buttons";
 
+// html {
+//     background: url('../images/mail.jpg') no-repeat center center fixed;
+// }
+
 div.error-messages{
     div{
         background-color:$brand-danger;

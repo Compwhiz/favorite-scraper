@@ -17,6 +17,9 @@
     var expressValidator = require('express-validator');
     var favicon = require('serve-favicon');
 
+    var SegfaultHandler = require('segfault-handler');
+    SegfaultHandler.registerHandler('crash.log');
+
     dotenv.load({ path: 'server/config/dev.env' });
 
     var passportConf = require('./config/passport');
@@ -34,12 +37,12 @@
     app.set('trust proxy', 1); // trust first proxy
         
     // Configure reddit snoocore
-    var reddit = require('./config/snoocore/index');
-    var redditRoutes = require('./routes/reddit/index')(reddit, app);
+    // var reddit = require('./config/snoocore/index');
+    // var redditRoutes = require('./routes/reddit/index')(reddit, app);
     
     // Configure medium client
-    var mediumConfig = require('./config/medium/index');
-    var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client, app);
+    // var mediumConfig = require('./config/medium/index');
+    // var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client, app);
         
     // Configure twitter client
     // var twitterClient = require('./config/twitter/index');
@@ -93,14 +96,14 @@
     });
 
     app.use(express.static(path.join(__dirname, '../')));
-    switch (process.env.NODE_ENV) {
-        case 'production':
-            app.use(express.static(path.join(__dirname, '../build')));
-            break;
-        default:
-            app.use(express.static(path.join(__dirname, '../client')));
-            break;
-    }
+    // switch (process.env.NODE_ENV) {
+    //     case 'production':
+    //         app.use(express.static(path.join(__dirname, '../build')));
+    //         break;
+    //     default:
+    app.use(express.static(path.join(__dirname, '../client')));
+    //         break;
+    // }
 
     app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");

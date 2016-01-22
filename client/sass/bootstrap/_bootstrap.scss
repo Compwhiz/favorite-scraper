@@ -9,8 +9,8 @@
 @import "bootstrap/mixins";
 
 // Bootswatch theme
-@import "bootswatch/variables";
-@import "bootswatch/bootswatch";
+@import "bootswatch/flatly/variables";
+@import "bootswatch/flatly/bootswatch";
 
 // Reset and dependencies
 @import "bootstrap/normalize";

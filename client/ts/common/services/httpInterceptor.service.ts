@@ -3,14 +3,13 @@
 module common.services {
     export class HttpInterceptorService {
 
-        static $inject = ['NotificationService'];
+        static $inject = ['$injector','NotificationService'];
 
-        constructor(private NotificationService: NotificationService) {
-            
+        constructor(private $injector:any, private NotificationService: NotificationService) {
         }
 
         static factory() {
-            var factory = (NotificationService: NotificationService) => new HttpInterceptorService(NotificationService);
+            var factory = ($injector:any, NotificationService: NotificationService) => new HttpInterceptorService($injector,NotificationService);
             factory.$inject = HttpInterceptorService.$inject;
             return factory;
         }
@@ -18,6 +17,9 @@ module common.services {
         public responseError = (response) => {
             if (response.status === 400) {
                 this.NotificationService.showError(response.data);
+            }
+            else if (response.status === 403) {
+                this.$injector.get('$state').transitionTo('login');                    
             }
             return response;
         }

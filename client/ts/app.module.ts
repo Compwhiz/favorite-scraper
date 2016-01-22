@@ -55,7 +55,7 @@ module favoriteScraper {
             }
         });
         
-        // $httpProvider.interceptors.push('HttpInterceptorService');
+        $httpProvider.interceptors.push('HttpInterceptorService');
     }
 }
 

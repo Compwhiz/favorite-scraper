@@ -280,6 +280,7 @@ passport.use(new RedditStrategy({
     callbackURL: '/login/reddit/callback',
     passReqToCallback: true
 }, function (req, accessToken, refreshToken, profile, done) {
+    var oneHour = Date.now() + (60 * 60 * 1000);
     if (req.user) {
         User.findOne({ reddit: profile.id }, function (err, existingUser) {
             if (existingUser) {
@@ -288,7 +289,7 @@ passport.use(new RedditStrategy({
             } else {
                 User.findById(req.user.id, function (err, user) {
                     user.reddit = profile.id;
-                    user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken });
+                    user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken, expires: oneHour });
                     user.profile.name = user.profile.name || profile.name;
                     user.profile.redditUsername = profile.name;
                     user.save(function (err) {
@@ -307,8 +308,9 @@ passport.use(new RedditStrategy({
                         // Update access and refresh tokens
                         user.tokens[redditTokenIndex].accessToken = accessToken;
                         user.tokens[redditTokenIndex].refreshToken = refreshToken;
+                        user.tokens[redditTokenIndex].expires = oneHour;
                     } else {
-                        user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken });
+                        user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken, expires: oneHour });
                     }
                     user.markModified('tokens');
 
@@ -321,7 +323,7 @@ passport.use(new RedditStrategy({
                 var user = new User();
                 // user.email = profile.username + "@reddit.com";
                 user.reddit = profile.id;
-                user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken });
+                user.tokens.push({ kind: 'reddit', accessToken: accessToken, refreshToken: refreshToken, expires: oneHour });
                 user.profile.name = profile.name;
                 user.profile.redditUsername = profile.name;
                 user.save(function (err) {
@@ -565,7 +567,7 @@ exports.isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/');
+    res.status(403).send("User not logged in.");
 };
 
 /**

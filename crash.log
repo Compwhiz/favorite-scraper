@@ -1,0 +1,11 @@
+PID 17559 received SIGSEGV for address: 0x3a8
+/home/josh/development/favorite-scraper/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x1b70)[0x7fcad4f45b70]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x10d10)[0x7fcad9f29d10]
+node(_ZN4node8debugger5Agent14MessageHandlerERKN2v85Debug7MessageE+0x50)[0xe02000]
+node(_ZN2v88internal5Debug20NotifyMessageHandlerENS_10DebugEventENS0_6HandleINS0_8JSObjectEEES5_b+0x8a5)[0xa467f5]
+node(_ZN2v88internal5Debug17ProcessDebugEventENS_10DebugEventENS0_6HandleINS0_8JSObjectEEEb+0x9f)[0xa46def]
+node(_ZN2v88internal5Debug14OnAfterCompileENS0_6HandleINS0_6ScriptEEE+0x35e)[0xa489fe]
+node[0xa25479]
+node(_ZN2v88internal8Compiler19GetFunctionFromEvalENS0_6HandleINS0_6StringEEENS2_INS0_18SharedFunctionInfoEEENS2_INS0_7ContextEEENS0_12LanguageModeENS0_16ParseRestrictionEi+0x313)[0xa27e63]
+node(_ZN2v88internal21Runtime_CompileStringEiPPNS0_6ObjectEPNS0_7IsolateE+0x138)[0xc961a8]
+[0x2dd48f80963b]

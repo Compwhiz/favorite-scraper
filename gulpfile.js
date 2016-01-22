@@ -1,36 +1,39 @@
 (function () {
     'use strict';
 
-    var gulp = require('gulp'),
-        nodemon = require('gulp-nodemon'),
-        watch = require('gulp-watch'),
-        jshint = require('gulp-jshint'),
-        livereload = require('gulp-livereload'),
-        ts = require('gulp-typescript'),
-        inject = require('gulp-inject'),
-        // count = require('gulp-count'),
-        sass = require('gulp-sass'),
+    var
         bowerFiles = require('main-bower-files'),
-        templateCache = require('gulp-angular-templatecache'),
+        nodemon = require('gulp-nodemon'),
         concat = require('gulp-concat'),
-        concatCss = require('gulp-concat-css'),
+        // concatCss = require('gulp-concat-css'),
+        // count = require('gulp-count'),
         cssNano = require('gulp-cssnano'),
         del = require('del'),
-        rename = require('gulp-rename'),
-        uglify = require('gulp-uglify'),
-        util = require('gulp-util'),
-        merge = require('merge-stream'),
-        // useref = require('gulp-useref'),
         exists = require('path-exists').sync,
-        path = require('path'),
         filter = require('gulp-filter'),
+        gulp = require('gulp'),
+        inject = require('gulp-inject'),
+        jshint = require('gulp-jshint'),
+        livereload = require('gulp-livereload'),
+        merge = require('merge-stream'),
+        path = require('path'),
+        // rename = require('gulp-rename'),
+        sass = require('gulp-sass'),
+        templateCache = require('gulp-angular-templatecache'),
+        ts = require('gulp-typescript'),
+        uglify = require('gulp-uglify'),
+        // useref = require('gulp-useref'),
+        // util = require('gulp-util'),
+        watch = require('gulp-watch'),
         _paths = ['server/**/*.js', 'client/js/**/*.js'];
 
     var config = require('./gulp.config')();
     var wiredep = require('wiredep').stream;
     var wiredepOptions = config.getWiredepDefaultOptions();
     
-    //register nodemon task
+    /**===========================================================
+    @Task - nodemon -- Run node application and watch with nodemon
+    ============================================================*/
     gulp.task('nodemon', function () {
         return nodemon({
             script: 'server/app.js',
@@ -41,7 +44,9 @@
             .on('restart');
     });
   
-    //register nodemon task
+    /**============================================================================
+    @Task - nodemon:debug -- Run node application with debug and watch with nodemon
+    =============================================================================*/
     gulp.task('nodemon:debug', function () {
         return nodemon({
             script: 'server/app.js',
@@ -53,58 +58,54 @@
             .on('restart');
     });
 
-    // Rerun the task when a file changes
+    /**=================================================================================
+    @Task - watch -- Watch server and client js files for changes and trigger livereload
+    ==================================================================================*/
     gulp.task('watch', function () {
         livereload.listen();
-        gulp.src(_paths, {
+        return gulp.src(_paths, {
             read: false
         })
             .pipe(watch())
-            .pipe(jshint())
-            .pipe(jshint.reporter('default'));
+            // .pipe(jshint())
+            // .pipe(jshint.reporter('default'));
         watch(_paths, livereload.changed);
     });
 
-    //lint js files
+    /**=============================================================
+    @Task - lint -- Run JSHint on server and client javascript files
+    ==============================================================*/
     // gulp.task('lint', function () {
     //     gulp.src(_paths)
     //         .pipe(jshint())
     //         .pipe(jshint.reporter('default'));
     // });
 
+    /**=============================================================
+    @Task - fonts -- Copy font-awesome fonts to dev and build folder
+    ==============================================================*/
     gulp.task('fonts', function () {
-        // dev
-        var dev = gulp.src(config.fonts)
+        var devStream = gulp.src(config.fonts)
             .pipe(gulp.dest(config.fontsDir));
-        // build
-        var build = gulp.src(config.fonts)
-            .pipe(gulp.dest(config.buildFontsDir));
 
-        return merge(dev, build);
-    });
-
-    gulp.task('templateCache', function () {
-        return gulp.src(config.htmltemplates)
-            .pipe(templateCache())
+        var buildStream = gulp.src(config.fonts)
             .pipe(gulp.dest(config.build));
+
+        return merge(devStream, buildStream);
     });
 
+    /**================================================================================
+    @Task - compile:scss -- Compile Sass style files and output in client/dev folder
+    =================================================================================*/
     gulp.task('compile:scss', function () {
         return gulp.src([config.scss, config.bower.directory + '/font-awesome/scss/font-awesome.scss'])
             .pipe(sass().on('on', sass.logError))
             .pipe(gulp.dest(config.css));
     });
 
-    gulp.task('build:css', ['compile:scss'], function () {
-        return gulp.src(config.allcss)
-            .pipe(concatCss("site.css", {
-                inlineImports: false
-            }))
-            .pipe(cssNano())
-            .pipe(rename('site.min.css'))
-            .pipe(gulp.dest(config.buildCss));
-    });
-
+    /**===========================================================================
+    @Task - inject:css -- Inject project CSS references into client/dev index.html
+    ============================================================================*/
     gulp.task('inject:css', ['compile:scss'], function () {
         var sources = gulp.src(config.allcss, { read: false });
 
@@ -114,6 +115,9 @@
             .pipe(gulp.dest(config.client));
     });
 
+    /**===========================================================================
+    @Task - compile:ts -- Compile Typescript files and output in client/dev folder
+    ============================================================================*/
     gulp.task('compile:ts', function () {
         var stream = gulp.src(config.allClientTs)
             .pipe(ts({
@@ -126,6 +130,61 @@
         return merge(client, build);
     });
 
+    /**=========================================================================
+    @Task - inject:js -- Inject project JS references into client/dev index.html
+    ==========================================================================*/
+    gulp.task('inject:js', function () {
+        var js = config.js;
+        var sources = gulp.src(js, { read: false });
+
+        return gulp.src(config.index)
+            .pipe(wiredep(wiredepOptions))
+            .pipe(inject(sources))
+            .pipe(gulp.dest(config.client))
+    });
+    
+    /**================================================================================================
+    @Task - inject:bower -- Inject third party (bower) JS and CSS references into client/dev index.html
+    =================================================================================================*/
+    gulp.task('inject:bower', function () {
+        var sources = gulp.src(bowerFiles(), { read: false });
+
+        return gulp.src(config.index)
+            .pipe(inject(sources, { name: 'bower' }))
+            .pipe(gulp.dest(config.client))
+    });
+
+    /**======================================
+    @Task - inject -- Run all inject tasks
+    =======================================*/
+    gulp.task('inject', ['inject:js', 'inject:bower', 'inject:css']);
+
+    /**===========================================================================
+    @Task - inject:js -- Production build process
+       - TS/JS
+       -- Compile all Typescript files
+       -- Concatinate into one app.js file
+       -- Uglify
+       -- Output to build/js folder
+            
+       - SCSS/CSS
+       -- Compile site and font-awesome SCSS files
+       -- Concatinate into one app.css file
+       -- Minify
+       -- Output to build/css folder
+            
+       - Bower
+       -- Collect all bower files
+       -- Concatinate and uglify JS files
+       -- Concatinate and minify CSS files
+       -- Output to respective build folders
+       
+       - TemplateCache
+       -- Put client html files into angular $templateCache JS file
+       
+       - Index.html
+       -- Inject production references into index.html and output to build folder 
+    ============================================================================*/
     gulp.task('build:dist', ['fonts'], function () {
         var appJSStream = gulp.src(config.allClientTs)
             .pipe(ts())
@@ -176,66 +235,38 @@
             .pipe(gulp.dest(config.build));
     });
 
-    gulp.task('build:js', ['compile:ts'], function () {
-        return gulp.src(config.clientJs)
-            .pipe(uglify())
-            .pipe(gulp.dest(config.buildJs));
-    });
-
-    gulp.task('inject:js', function () {
-        var js = config.js;
-        var sources = gulp.src(js, { read: false });
-
-        return gulp.src(config.index)
-            .pipe(wiredep(wiredepOptions))
-            .pipe(inject(sources))
-            .pipe(gulp.dest(config.client))
-    });
-
-    gulp.task('inject:bower', function () {
-        var sources = gulp.src(bowerFiles(), { read: false });
-
-        return gulp.src(config.index)
-            .pipe(inject(sources, { name: 'bower' }))
-            .pipe(gulp.dest(config.client))
-    });
-
-    gulp.task('inject:build', [], function () {
-        var bowerStream = gulp.src(bowerFiles(), { read: false })
-            .pipe(concat('vendors.js'))
-            .pipe(gulp.dest(config.buildJs));
-
-        var appStream = gulp.src(config.clientJs, { read: false })
-            .pipe(uglify())
-            .pipe(gulp.dest(config.buildJs));
-
-        var sources = merge(bowerStream, appStream);
-
-        return gulp.src(config.build + 'index.html')
-            .pipe(inject(merge(sources)))
-            .pipe(gulp.dest(config.build));
-    });
-
-    gulp.task('inject', ['inject:js', 'inject:bower', 'inject:css']);
-
-    gulp.task('watch:ts', function () {
-        return gulp.watch('./client/ts/**/*.ts', ['compile:ts']);
-    });
-
+    /**======================================
+    @Task - clean:temp -- Delete .tmp folder
+    =======================================*/
     gulp.task('clean:temp', function () {
         return del([config.temp]);
     });
 
+    /**=======================================
+    @Task - clean:build -- Delete build folder
+    ========================================*/
     gulp.task('clean:build', function () {
         return del([config.build]);
     });
 
+    /**======================================
+    @Task - clean -- Run all clean tasks
+    =======================================*/
     gulp.task('clean', ['clean:build', 'clean:temp'], function () { });
 
+    /**========================================
+    @Task - build -- Run client/dev build tasks
+    =========================================*/
     gulp.task('build', ['compile:scss', 'compile:ts', /*'lint',*/ 'inject'], function () { });
 
-    // The default task (called when you run `gulp` from cli)
+    /**=========================================================================
+    @Task - default -- Run build task, start production node server, watch files
+    ==========================================================================*/
     gulp.task('default', ['build', 'nodemon', 'watch']);
+    
+    /**==================================================================
+    @Task - debug -- Run build task, start debug node server, watch files
+    ===================================================================*/
     gulp.task('debug', ['build', 'nodemon:debug', 'watch']);
 
 } ());

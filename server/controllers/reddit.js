@@ -1,5 +1,6 @@
 var request = require('request');
 var _ = require('lodash');
+// var when = require('when');
 
 var Snoocore = require('snoocore')
 var reddit = new Snoocore({
@@ -23,20 +24,33 @@ var reddit = new Snoocore({
 
 function setAccessToken(user) {
     var redditToken = _.find(user.tokens, { kind: 'reddit' });
+            reddit.setRefreshToken(redditToken.refreshToken);
+            reddit.setAccessToken(redditToken.accessToken);
 
-    reddit.setAccessToken(redditToken.accessToken);
+    // if (redditToken) {
+    //     if (redditToken.expires < Date.now()) {
+    //         // need to refresh token
+    //         reddit.setRefreshToken(redditToken.refreshToken);
+    //     } else {
+    //         reddit.setAccessToken(redditToken.accessToken);
+    //         return when.resolve();
+    //     }
+    // }
 }
 
 exports.getSavedPosts = function (req, res, next) {
     setAccessToken(req.user);
 
     var options = {};
-    
+
     if (req.query.after) {
         options.after = req.query.after;
     }
 
     reddit('/u/' + req.user.profile.redditUsername + '/saved').get(options).then(function (result) {
+        if (result.status) {
+
+        }
         res.send(result);
     }).catch(function (error) {
         res.status(500).send(error);
