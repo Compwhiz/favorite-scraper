@@ -11,6 +11,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var RedditStrategy = require('passport-reddit').Strategy;
 var ImgurStrategy = require('passport-imgur').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var TumblrStrategy = require('passport-tumblr').Strategy;
 var OAuthStrategy = require('passport-oauth').OAuthStrategy;
 var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
@@ -505,24 +506,65 @@ passport.use(new GoogleStrategy({
 /**
  * Tumblr API OAuth.
  */
-// passport.use('tumblr', new OAuthStrategy({
-//     requestTokenURL: 'http://www.tumblr.com/oauth/request_token',
-//     accessTokenURL: 'http://www.tumblr.com/oauth/access_token',
-//     userAuthorizationURL: 'http://www.tumblr.com/oauth/authorize',
-//     consumerKey: process.env.TUMBLR_KEY,
-//     consumerSecret: process.env.TUMBLR_SECRET,
-//     callbackURL: '/auth/tumblr/callback',
-//     passReqToCallback: true
-//   },
-//   function(req, token, tokenSecret, profile, done) {
-//     User.findById(req.user._id, function(err, user) {
-//       user.tokens.push({ kind: 'tumblr', accessToken: token, tokenSecret: tokenSecret });
-//       user.save(function(err) {
-//         done(err, user);
-//       });
-//     });
-//   }
-// ));
+passport.use('tumblr', new TumblrStrategy({
+    consumerKey: process.env.TUMBLR_KEY,
+    consumerSecret: process.env.TUMBLR_SECRET,
+    callbackURL: '/login/tumblr/callback',
+    passReqToCallback: true
+},
+    function (req, accessToken, refreshToken, profile, done) {
+        profile = profile._json.response.user;
+
+        if (req.user) {
+            User.findOne({ tumblr: profile.name }, function (err, existingUser) {
+                if (existingUser) {
+                    req.flash('errors', { msg: 'There is already a Tumblr account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+                    done(err);
+                } else {
+                    User.findById(req.user.id, function (err, user) {
+                        user.tumblr = profile.name;
+                        user.tokens.push({ kind: 'tumblr', accessToken: accessToken });
+                        user.profile.name = user.profile.name || profile.name;
+                        user.save(function (err) {
+                            req.flash('info', { msg: 'Tumblr account has been linked.' });
+                            done(err, user);
+                        });
+                    });
+                }
+            });
+        } else {
+            User.findOne({ tumblr: profile.name }, function (err, existingUser) {
+                if (existingUser) {
+                    User.findById(existingUser.id, function (err, user) {
+                        var tumblrTokenIndex = _.findIndex(user.tokens, { kind: 'tumblr' });
+                        if (tumblrTokenIndex >= 0) {
+                            // Update access and refresh tokens
+                            user.tokens[tumblrTokenIndex].accessToken = accessToken;
+                            user.tokens[tumblrTokenIndex].refreshToken = refreshToken;
+                        } else {
+                            user.tokens.push({ kind: 'tumblr', accessToken: accessToken, refreshToken: refreshToken });
+                        }
+                        user.markModified('tokens');
+
+                        user.save(function (err) {
+                            return done(err, user);
+                        });
+                    });
+                    // return done(null, existingUser);
+                } else {
+                    var user = new User();
+                    // user.email = profile.username + "@imgur.com";
+                    user.tumblr = profile.name;
+                    user.tokens.push({ kind: 'tumblr', accessToken: accessToken, refreshToken: refreshToken });
+                    user.profile.name = profile.name;
+                    user.save(function (err) {
+                        done(err, user);
+                    });
+                }
+            });
+        }
+    }
+    ));
 
 /**
  * Steam API OpenID.

@@ -3,7 +3,7 @@
 
 module twitter {
     export class TwitterController {
-        static $inject = ['$timeout', 'TwitterService', 'UserService'];
+        static $inject = ['TwitterService', 'UserService'];
 
         public twitterLoginUrl;
         public savedPosts = [];
@@ -11,7 +11,7 @@ module twitter {
         public bookmarked: any;
         public loadingFavorites = false;
 
-        constructor(private $timeout: ng.ITimeoutService, private TwitterService: TwitterService, private UserService: user.services.UserService) {
+        constructor(private TwitterService: TwitterService, private UserService: user.services.UserService) {
             this.getFavorites();
         }
 

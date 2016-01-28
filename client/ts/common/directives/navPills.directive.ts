@@ -16,7 +16,7 @@ module common {
 
         constructor($rootScope: ng.IRootScopeService, $stateParams: ng.ui.IStateParamsService) {
             NavPillsDirective.prototype.link = (scope: NavPillsScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-                scope.states = [/*'home',*/'reddit','twitter'/*,'medium'*/,'imgur', 'user'];
+                scope.states = [/*'home',*/'reddit','twitter'/*,'medium'*/,'imgur', 'tumblr', 'user'];
                 
                 scope.currentState = $stateParams['current'];
 

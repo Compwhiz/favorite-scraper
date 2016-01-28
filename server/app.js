@@ -160,6 +160,12 @@
         res.redirect('/#/imgur');
     });
 
+    app.get('/login/tumblr', passport.authenticate('tumblr'));
+
+    app.get('/login/tumblr/callback', passport.authenticate('tumblr', { failureRedirect: '/login/tumblr/failed' }), function (req, res) {
+        res.redirect('/#/tumblr');
+    });
+
     // API Controllers =============================================================================================
     var twitterController = require('./controllers/twitter');
     app.get('/api/twitter/favorites', passportConf.isAuthenticated, passportConf.isAuthorized, twitterController.getFavorites);

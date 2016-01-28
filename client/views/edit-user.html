@@ -19,9 +19,9 @@
                 <label for="userName">Name</label>
                 <input type="text" class="form-control" id="userName" name="userName" placeholder="Name" data-ng-model="ctrl.user.profile.name">
             </div>
-            <div class="form-group"></div>
-            <!--<a class="btn btn-default" data-ng-click="ctrl.undoChanges()">Undo Changes</a>-->
-            <button class="btn btn-primary" type="submit" data-ng-disabled="ctrl.updatingProfile">Save</button>
+            <div class="text-right">
+                <button class="btn btn-primary" type="submit" data-ng-disabled="ctrl.updatingProfile">Save</button>
+            </div>
         </form>
     </div>
     <div class="well">
@@ -72,14 +72,22 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit">Save</button>
+            <div class="text-right">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
         </form>
     </div>
     <div class="well">
         <h2>Accounts</h2>
-        <div class="block-grid-sm-1 block-grid-lg-3">
+        <div class="block-grid-sm-2 block-grid-lg-3">
             <div class="block-grid-item" data-ng-repeat="token in ctrl.user.tokens track by token.kind">
-                <a class="btn btn-default btn-block btn-{{token.kind}}">{{token.kind | uppercase}}</a>
+                <div uib-dropdown>
+                    <button id="button-account-{{token.kind}}" class="btn btn-default btn-block btn-{{token.kind}}" uib-dropdown-toggle>{{token.kind | uppercase}}</button>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="button-account-{{token.kind}}">
+                        <li role="menuitem"><a data-ui-sref="{{token.kind}}">View Favs</a></li>
+                        <li role="menuitem"><a data-ng-click="ctrl.unlinkAccount(ctrl.user._id, token.kind)">Unlink Account</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

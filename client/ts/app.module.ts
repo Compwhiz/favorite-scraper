@@ -28,6 +28,11 @@ module favoriteScraper {
             templateUrl: 'partials/imgur.html',
             controller: 'ImgurController',
             controllerAs: 'ctrl'
+        }).state('tumblr', {
+            url: '/tumblr',
+            templateUrl: 'partials/tumblr.html',
+            controller: 'TumblrController',
+            controllerAs: 'ctrl'
         }).state('user', {
             url: '/user',
             templateUrl: 'partials/user.html',
@@ -76,6 +81,7 @@ module favoriteScraper {
         'reddit',
         'common',
         'medium',
+        'tumblr',
         'twitter',
         'user',
         'templates'

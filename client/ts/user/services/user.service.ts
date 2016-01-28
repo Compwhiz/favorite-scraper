@@ -83,9 +83,13 @@ module user.services {
             var defer = this.$q.defer();
 
             this.$http.post(this.apiBase + 'user/account/unlink', { id: id, type: type }).then(response=> {
-                if (response.status === 200)
-                { defer.resolve(response.data); }
-                else { defer.reject(response.data); }
+                if (response.status === 200) {
+                    this.$rootScope.user = response.data;
+                    defer.resolve(response.data);
+                }
+                else {
+                    defer.reject(response.data);
+                }
             }).catch(error=> {
                 defer.reject(error.data);
             });

@@ -8,6 +8,7 @@ var userSchema = new mongoose.Schema({
 
     facebook: String,
     twitter: String,
+    tumblr: String,
     reddit: String,
     imgur: String,
     google: String,
@@ -26,7 +27,8 @@ var userSchema = new mongoose.Schema({
     },
 
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    emailConfirmedDate: Date
 });
 
 /**

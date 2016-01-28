@@ -212,14 +212,11 @@ exports.unlinkAccount = function (req, res, next) {
 
             user.markModified('tokens');
 
-            user.save(function (err, u, numAffected) {
-
-                console.log('RemoveToken ' + numAffected);
-
+            user.save(function (err, user, numAffected) {
                 if (err) {
                     return res.status(500).send(err);
                 }
-                return res.send(u);
+                return res.send(user);
             });
         });
         // console.log('remove ' + req.body.type + ' token.');

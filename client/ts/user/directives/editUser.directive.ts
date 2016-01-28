@@ -79,6 +79,14 @@ module user {
             });
         }
 
+        public unlinkAccount(id, type) {
+            this.UserService.unlinkAccount(id, type).then(response=> {
+                this.user = angular.copy(this.$rootScope.user);
+            }).catch(error=> {
+                console.log(error);
+            });
+        }
+
         private addMessage(list: any[], msg, type = 'success') {
             if (!Array.isArray(msg)) {
                 msg = [msg];

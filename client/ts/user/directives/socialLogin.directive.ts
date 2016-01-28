@@ -12,7 +12,7 @@ module user {
 
         constructor() {
             SocialLoginDirective.prototype.link = (scope: SocialLoginDirectiveScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-                scope.options = ['reddit', 'twitter', 'imgur'];
+                scope.options = ['reddit', 'twitter', 'imgur', 'tumblr'];
             }
         }
 
