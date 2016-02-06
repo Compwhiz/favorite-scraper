@@ -44,3 +44,28 @@ form.ng-submitted {
      padding: 0.5rem;   
     }
 }
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+$footer-height : 45px;
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: $footer-height;
+}
+
+.footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:$footer-height;
+    background-color: $navbar-default-bg;
+    border-color: $navbar-default-border;
+    
+    .text-muted{
+        margin:$footer-height/3 0;
+    }
+}

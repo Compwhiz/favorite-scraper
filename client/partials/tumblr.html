@@ -1,3 +1,9 @@
 <div class="container">
-    <a href="/login/tumblr">Link Tumblr Account</a>
+    <div data-ng-repeat="post in ctrl.likedPosts track by post.id">
+        <!--<pre>
+        {{post|json}}
+        </pre>-->
+        <fs-tumblr-post post="post"></fs-tumblr-post>
+    </div>
+    <p class="text-center lead" data-ng-show="ctrl.loadingLikedPosts">Loading...</p>
 </div>

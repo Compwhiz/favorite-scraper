@@ -512,7 +512,7 @@ passport.use('tumblr', new TumblrStrategy({
     callbackURL: '/login/tumblr/callback',
     passReqToCallback: true
 },
-    function (req, accessToken, refreshToken, profile, done) {
+    function (req, accessToken, tokenSecret, profile, done) {
         profile = profile._json.response.user;
 
         if (req.user) {
@@ -523,7 +523,7 @@ passport.use('tumblr', new TumblrStrategy({
                 } else {
                     User.findById(req.user.id, function (err, user) {
                         user.tumblr = profile.name;
-                        user.tokens.push({ kind: 'tumblr', accessToken: accessToken });
+                        user.tokens.push({ kind: 'tumblr', accessToken: accessToken, tokenSecret: tokenSecret });
                         user.profile.name = user.profile.name || profile.name;
                         user.save(function (err) {
                             req.flash('info', { msg: 'Tumblr account has been linked.' });
@@ -540,9 +540,9 @@ passport.use('tumblr', new TumblrStrategy({
                         if (tumblrTokenIndex >= 0) {
                             // Update access and refresh tokens
                             user.tokens[tumblrTokenIndex].accessToken = accessToken;
-                            user.tokens[tumblrTokenIndex].refreshToken = refreshToken;
+                            user.tokens[tumblrTokenIndex].tokenSecret = tokenSecret;
                         } else {
-                            user.tokens.push({ kind: 'tumblr', accessToken: accessToken, refreshToken: refreshToken });
+                            user.tokens.push({ kind: 'tumblr', accessToken: accessToken, tokenSecret: tokenSecret });
                         }
                         user.markModified('tokens');
 
@@ -555,7 +555,7 @@ passport.use('tumblr', new TumblrStrategy({
                     var user = new User();
                     // user.email = profile.username + "@imgur.com";
                     user.tumblr = profile.name;
-                    user.tokens.push({ kind: 'tumblr', accessToken: accessToken, refreshToken: refreshToken });
+                    user.tokens.push({ kind: 'tumblr', accessToken: accessToken, refreshToken: tokenSecret });
                     user.profile.name = profile.name;
                     user.save(function (err) {
                         done(err, user);

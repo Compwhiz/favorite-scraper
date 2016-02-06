@@ -1,6 +1,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
     email: { type: String, unique: true, lowercase: true },
@@ -93,5 +94,12 @@ userSchema.methods.gravatar = function (size) {
     var md5 = crypto.createHash('md5').update(this.email).digest('hex');
     return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
 };
+
+/**
+ * Helper method for getting specifit access token
+ */
+userSchema.methods.getAccessToken = function (kind) {
+    return _.find(this.tokens, { kind: kind });
+}
 
 module.exports = mongoose.model('User', userSchema);

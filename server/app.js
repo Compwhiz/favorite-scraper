@@ -179,6 +179,9 @@
     app.get('/api/imgur/account', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.getAccount);
     app.get('/api/imgur/refresh', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.refresh);
 
+    var tumblrController = require('./controllers/tumblr');
+    app.get('/api/tumblr/likes', passportConf.isAuthenticated, passportConf.isAuthorized, tumblrController.getUsersLikes);
+
     var userController = require('./controllers/user');
     app.get('/api/user/all', userController.all);
     // app.post('/api/user/delete', userController.delete);

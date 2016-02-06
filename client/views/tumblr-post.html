@@ -1,0 +1,18 @@
+<div class="container-fluid well">
+    <div class="media">
+        <div class="media-left">
+            <!--<a href="{{tweet.user.url}}" target="_blank">
+                <img data-ng-src="{{tweet.user.profile_image_url_https}}" alt="Tweet Image" class="media-object img-rounded">
+            </a>-->
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading"><a href="{{::post.short_url}}" target="_blank">{{::post.title}}</a><br/><small><a href="https://{{::post.blog_name}}.tumblr.com" target="_blank">{{::post.blog_name}}</a>&nbsp;<span am-time-ago="post.date"></span></small></h3>
+            <div class="padding-sm">
+                <div data-ng-bind-html="post.body"></div>
+                <span class="padding-sm" data-ng-repeat="tag in post.tags track by tag">
+                    <a href="https://www.tumblr.com/tagged/{{tag}}" target="_blank"><small>#{{tag}}</small></a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
