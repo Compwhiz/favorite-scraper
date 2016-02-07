@@ -96,14 +96,14 @@
     });
 
     app.use(express.static(path.join(__dirname, '../')));
-    // switch (process.env.NODE_ENV) {
-    //     case 'production':
-    //         app.use(express.static(path.join(__dirname, '../build')));
-    //         break;
-    //     default:
-    app.use(express.static(path.join(__dirname, '../client')));
-    //         break;
-    // }
+    switch (process.env.NODE_ENV) {
+        case 'production':
+            app.use(express.static(path.join(__dirname, '../build')));
+            break;
+        default:
+            app.use(express.static(path.join(__dirname, '../client')));
+            break;
+    }
 
     app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
