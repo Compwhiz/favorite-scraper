@@ -1,1 +1,1 @@
-web: node_modules/gulp/bin/gulp build:dist && node server/app.js
+web: node server/app.js

@@ -18,7 +18,7 @@
     var favicon = require('serve-favicon');
 
     var isProduction = process.env.NODE_ENV === 'production';
-    
+
     if (!isProduction) {
         var SegfaultHandler = require('segfault-handler');
         SegfaultHandler.registerHandler('crash.log');
@@ -100,14 +100,12 @@
     });
 
     app.use(express.static(path.join(__dirname, '../')));
-    // switch (process.env.NODE_ENV) {
-    //     case 'production':
-    //         app.use(express.static(path.join(__dirname, '../build')));
-    //         break;
-    //     default:
-    app.use(express.static(path.join(__dirname, '../client')));
-    //         break;
-    // }
+    if (isProduction) {
+        app.use(express.static(path.join(__dirname, '../build')));
+    }
+    else {
+        app.use(express.static(path.join(__dirname, '../client')));
+    }
 
     app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
