@@ -43,6 +43,7 @@ module.exports = function () {
         client: client,
         clientJs: client + 'js/',
         defaultPort: '8080',
+        favicon: client + 'favicon.ico',
         fonts: bower.directory + '/font-awesome/fonts/**/*.*',
         fontsDir: client + 'fonts',
         htmltemplates: [client + '**/*.html', '!' + client + 'index.html'],

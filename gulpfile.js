@@ -67,8 +67,8 @@
             read: false
         })
             .pipe(watch())
-            // .pipe(jshint())
-            // .pipe(jshint.reporter('default'));
+        // .pipe(jshint())
+        // .pipe(jshint.reporter('default'));
         watch(_paths, livereload.changed);
     });
 
@@ -92,6 +92,15 @@
             .pipe(gulp.dest(config.build));
 
         return merge(devStream, buildStream);
+    });
+
+    /**
+     * @Task - favicon
+     * Copy favicon to build folder
+     */
+    gulp.task('favicon', function () {
+        return gulp.src(config.favicon)
+            .pipe(gulp.dest(config.build));
     });
 
     /**================================================================================
