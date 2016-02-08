@@ -17,8 +17,12 @@
     var expressValidator = require('express-validator');
     var favicon = require('serve-favicon');
 
-    var SegfaultHandler = require('segfault-handler');
-    SegfaultHandler.registerHandler('crash.log');
+    var isProduction = process.env.NODE_ENV === 'production';
+    
+    if (!isProduction) {
+        var SegfaultHandler = require('segfault-handler');
+        SegfaultHandler.registerHandler('crash.log');
+    }
 
     dotenv.load({ path: 'server/config/dev.env' });
 
@@ -101,7 +105,7 @@
     //         app.use(express.static(path.join(__dirname, '../build')));
     //         break;
     //     default:
-            app.use(express.static(path.join(__dirname, '../client')));
+    app.use(express.static(path.join(__dirname, '../client')));
     //         break;
     // }
 
