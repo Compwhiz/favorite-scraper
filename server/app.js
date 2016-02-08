@@ -17,9 +17,9 @@
     var expressValidator = require('express-validator');
     var favicon = require('serve-favicon');
 
-    var isProduction = process.env.NODE_ENV === 'production';
+    var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-    if (!isProduction) {
+    if (!IS_PRODUCTION) {
         var SegfaultHandler = require('segfault-handler');
         SegfaultHandler.registerHandler('crash.log');
     }
@@ -30,7 +30,6 @@
 
     var app = express();
 
-        
     // Connect to MongoDB.
     mongoose.connect(process.env.MONGODB || process.env.MODULUS_URI);
     mongoose.connection.on('error', function () {
@@ -40,18 +39,6 @@
 
     app.set('trust proxy', 1); // trust first proxy
         
-    // Configure reddit snoocore
-    // var reddit = require('./config/snoocore/index');
-    // var redditRoutes = require('./routes/reddit/index')(reddit, app);
-    
-    // Configure medium client
-    // var mediumConfig = require('./config/medium/index');
-    // var mediumRoutes = require('./routes/medium/index')(mediumConfig.medium, mediumConfig.client, app);
-        
-    // Configure twitter client
-    // var twitterClient = require('./config/twitter/index');
-    // var twitterRoutes = require('./routes/twitter/index')(twitterClient, app);
-    
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.engine('html', require('ejs').renderFile);
@@ -59,7 +46,9 @@
 
     app.use(favicon(path.join(__dirname, '..', 'client', 'favicon.ico')));
 
-    app.use(logger('dev'));
+    if (!IS_PRODUCTION) {
+        app.use(logger('dev'));
+    }
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
@@ -100,7 +89,7 @@
     });
 
     app.use(express.static(path.join(__dirname, '../')));
-    if (isProduction) {
+    if (IS_PRODUCTION) {
         app.use(express.static(path.join(__dirname, '../build')));
     }
     else {
@@ -121,11 +110,6 @@
     var routes = require('./routes/index');
     app.use('/', routes);
         
-    // API routes
-    // app.use('/api/reddit', redditRoutes);
-    // app.use('/api/medium', mediumRoutes);
-    // app.use('/api/twitter', twitterRoutes);
-
     // OAuth logins/callbacks =============================================================================================
     app.get('/login/twitter', passport.authenticate('twitter'));
 
@@ -186,7 +170,6 @@
 
     var userController = require('./controllers/user');
     app.get('/api/user/all', userController.all);
-    // app.post('/api/user/delete', userController.delete);
     app.post('/api/user/forgotpassword', userController.postForgot);
     app.post('/api/user/create', userController.createUser);
     app.post('/api/user/account/unlink', passportConf.isAuthenticated, userController.unlinkAccount);
