@@ -15,6 +15,10 @@ module user {
         constructor(private $rootScope: any) {
             UserDirective.prototype.link = (scope: UserScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
                 scope.user = $rootScope.user;
+
+                $rootScope.$watch('user', (user) => {
+                    scope.user = user;
+                });
             };
         }
 

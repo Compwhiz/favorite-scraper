@@ -2,7 +2,9 @@
 	
 
 module favoriteScraper {
-    export function Config($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $httpProvider: ng.IHttpProvider) {
+    export function Config($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $httpProvider: ng.IHttpProvider, $compileProvider:ng.ICompileProvider) {
+        $compileProvider.debugInfoEnabled(false);
+        
         $urlRouterProvider.otherwise('/');
 
         $stateProvider.state('home', {
@@ -87,7 +89,7 @@ module favoriteScraper {
         'templates'
     ]);
 
-    app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', favoriteScraper.Config]);
+    app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$compileProvider', favoriteScraper.Config]);
 
     app.constant('toastr', window['toastr']);
 })();
