@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html data-ng-app="favoriteScraper" data-ng-strict-di>
+
+<head>
+    <title>FavScraper</title>
+    <!-- build-vendor:css -->
+    <link rel="stylesheet" href="/build/css/vendor.css">
+    <!-- endinject -->
+    <!-- build-app:css -->
+    <link rel="stylesheet" href="/build/css/app.css">
+    <!-- endinject -->
+</head>
+
+<body data-ng-controller="RootController as rootCtrl">
+    <fs-nav-bar></fs-nav-bar>
+    <!--<fs-current-user></fs-current-user>-->
+    <div class="container-fluid">
+        <div fs-if-user>
+            <fs-nav-pills></fs-nav-pills>
+            <hr>
+        </div>
+        <div class="container">
+            <ui-view></ui-view>
+        </div>
+    </div>
+    <!-- build-vendor:js -->
+    <script src="/build/js/vendor.js"></script>
+    <!-- endinject -->
+    <!-- build-app:js -->
+    <script src="/build/js/app.js"></script>
+    <!-- endinject -->
+    <!-- build-templates:js -->
+    <script src="/build/js/templates.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>
