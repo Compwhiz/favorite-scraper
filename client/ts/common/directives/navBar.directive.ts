@@ -2,24 +2,30 @@
 
 module common {
     interface NavBarScope extends ng.IScope {
-
+        navbarCollapsed: boolean;
+        navigateToState: any;
     }
 
     export class NavBarDirective {
         public templateUrl = 'views/nav-bar.html';
         public restrict = 'E';
         public scope = false;
-        static $inject = [];
+        static $inject = ['$state'];
         public link: (scope: NavBarScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
 
-        constructor() {
+        constructor($state:ng.ui.IStateService) {
             NavBarDirective.prototype.link = (scope: NavBarScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+                scope.navbarCollapsed = true;
 
+                scope.navigateToState = function navigateToState(state) {
+                    scope.navbarCollapsed=true;
+                    $state.transitionTo(state);
+                }
             }
         }
 
         static factory() {
-            var directive = () => new NavBarDirective();
+            var directive = ($state) => new NavBarDirective($state);
             directive.$inject = NavBarDirective.$inject;
             return directive;
         }

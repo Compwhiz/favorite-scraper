@@ -6,7 +6,7 @@
     var logger = require('morgan');
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
-    var cookieSession = require('cookie-session');
+    // var cookieSession = require('cookie-session');
     var dotenv = require('dotenv');
     var mongoose = require('mongoose');
     var session = require('express-session');
@@ -37,7 +37,7 @@
         process.exit(1);
     });
 
-    app.set('trust proxy', 1); // trust first proxy
+    // app.set('trust proxy', 1); // trust first proxy
         
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
@@ -58,10 +58,10 @@
     app.use(flash());
         
     // Setup session
-    app.use(cookieSession({
-        name: 'session',
-        keys: ['key1', 'key2']
-    }));
+    // app.use(cookieSession({
+    //     name: 'session',
+    //     keys: ['key1', 'key2']
+    // }));
 
     app.use(session({
         resave: true,
@@ -78,10 +78,7 @@
 
     app.use(function (req, res, next) {
         res.locals.user = req.user;
-        next();
-    });
 
-    app.use(function (req, res, next) {
         if (/api/i.test(req.path)) {
             req.session.returnTo = req.path;
         }
@@ -97,7 +94,7 @@
     }
 
     app.all('*', function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
+        // res.header("Access-Control-Allow-Origin", "*");
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header("Access-Control-Allow-Headers", "X-Requested-With,X-Powered-By,Content-Type");
         if (req.method === 'OPTIONS') {
@@ -136,38 +133,44 @@
             })(req, res, next);
         }
         else {
-            next(new Error(403));
+            next(new Error('403'));
         }
     });
 
     app.get('/login/imgur', passport.authenticate('imgur'));
-
     app.get('/login/imgur/callback', passport.authenticate('imgur', { failureRedirect: '/login/imgur/failed' }), function (req, res) {
         res.redirect('/#/imgur');
     });
 
-    app.get('/login/tumblr', passport.authenticate('tumblr'));
 
+    app.get('/login/tumblr', passport.authenticate('tumblr'));
     app.get('/login/tumblr/callback', passport.authenticate('tumblr', { failureRedirect: '/login/tumblr/failed' }), function (req, res) {
         res.redirect('/#/tumblr');
     });
 
     // API Controllers =============================================================================================
+    // Twitter
     var twitterController = require('./controllers/twitter');
     app.get('/api/twitter/favorites', passportConf.isAuthenticated, passportConf.isAuthorized, twitterController.getFavorites);
 
+    // Reddit
     var redditController = require('./controllers/reddit');
     app.get('/api/reddit/me', passportConf.isAuthenticated, passportConf.isAuthorized, redditController.getCurrentUser);
     app.get('/api/reddit/saved', passportConf.isAuthenticated, passportConf.isAuthorized, redditController.getSavedPosts);
 
+    // Imgur
     var imgurController = require('./controllers/imgur');
     app.get('/api/imgur/favorites', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.getFavorites);
     app.get('/api/imgur/account', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.getAccount);
     app.get('/api/imgur/refresh', passportConf.isAuthenticated, passportConf.isAuthorized, imgurController.refresh);
+    app.get('/api/imgur/album/:id', imgurController.getAlbumInfo);
+    app.get('/api/imgur/album/:id/images', imgurController.getAlbumImages);
 
+    // Tumblr
     var tumblrController = require('./controllers/tumblr');
     app.get('/api/tumblr/likes', passportConf.isAuthenticated, passportConf.isAuthorized, tumblrController.getUsersLikes);
 
+    // User
     var userController = require('./controllers/user');
     app.get('/api/user/all', userController.all);
     app.post('/api/user/forgotpassword', userController.postForgot);

@@ -1,29 +1,38 @@
-<div>
-    <a href="/login/imgur">Imgur Login</a>
-</div>
-<div>
-    <a href="javascript:void(0)" data-ng-click="ctrl.getFavorites()">Get Favorites</a>
-</div>
-<div>
-    <a href="javascript:void(0)" data-ng-click="ctrl.getAccount()">Get Account</a>
-</div>
-<div><a href="javascript:void(0)" data-ng-click="ctrl.refresh()">Refresh Token</a></div>
-<div>
-    <h2>Favorites</h2>
-    <div class="panel panel-default" data-ng-repeat="post in ctrl.favorites track by post.id">
+<div class="container">
+    <!--<div style="height: 305px">
+        <uib-carousel interval="0">
+            <uib-slide ng-repeat="post in ctrl.favorites track by post.id" index="$index">
+                <img ng-src="{{post.link}}" style="margin:auto;">
+                <div class="carousel-caption">
+                    <h4>Slide {{post.id}}</h4>
+                    <p>{{post.description}}</p>
+                </div>
+            </uib-slide>
+        </uib-carousel>
+    </div>-->
+    <!--<div class="panel panel-default imgur-post" data-ng-repeat="post in ctrl.favorites track by post.id">
         <div class="panel-body">
-            <!--TODO: Need to remove image extension from link-->
-            <h2><a href="{{post.link}}" target="_blank">{{post.title}}</a>&nbsp;<small><span am-time-ago="post.datetime | amFromUnix"></span></small></h2>
+            <h2><a href="{{post.link}}" target="_blank">{{::post.title}}</a>&nbsp;<small>{{::post.account_url}}&nbsp;<span am-time-ago="post.datetime | amFromUnix"></span></small></h2>
+            <div data-ng-if="post.is_album">
+                <button class="btn btn-default" data-ng-click="ctrl.getAlbumImages(post)">View {{::post.images_count}} Images</button>
+                <uib-accordion>
+                    <uib-accordion-group heading="Album">
+                        <div class="well" data-ng-repeat="image in post.images">
+                            <img fs-lazy-src="{{::image.link}}" animate-visible="true" alt="{{::image.id}}" class="img-thumbnail" />
+                            <p class="padding-sm">{{::image.description}}</p>
+                        </div>
+                    </uib-accordion-group>
+                </uib-accordion>
+            </div>
+            <div data-ng-if="!post.is_album">
+                <img fs-lazy-src="{{::post.link}}" animate-visible="true" alt="{{::post.id}}" class="img-thumbnail" />
+            </div>
             <uib-accordion data-ng-if="post.description">
-                <uib-accordion-group heading="Desciprtion">
+                <uib-accordion-group heading="Description">
                     <p data-ng-bind-html="post.description">
                     </p>
                 </uib-accordion-group>
             </uib-accordion>
-            <!--<pre>{{post | json}}</pre>-->
         </div>
-    </div>
-</div>
-<div>
-    <h2>Account</h2> {{ctrl.account}}
+    </div>-->
 </div>

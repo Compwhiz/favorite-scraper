@@ -1,6 +1,6 @@
 <div class="container-fluid well">
     <div class="media">
-        <div class="media-left">
+        <div class="media-left hidden-sm hidden-xs">
             <a href="{{post.url}}" target="_blank">
                 <div data-ng-switch="post.thumbnail">
                     <div data-ng-switch-when="self" class="reddit-thumbnail self"></div>
@@ -11,15 +11,12 @@
             </a>
         </div>
         <div class="media-body">
-            <h3 class="media-heading"><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></h3>
+            <div class="reddit-heading media-heading"><a href="{{post.url}}" target="_blank">{{post.title}}</a>&nbsp;<small>({{post.domain}})</small></div>
             <div>
                 submitted <span am-time-ago="post.created | amFromUnix"></span> by
                 <a href="https://www.reddit.com/user/{{post.author}}" target="_blank">{{post.author}}</a> to
                 <a href="https://www.reddit.com/r/{{post.subreddit}}" target="_blank">r/{{post.subreddit}}</a>
             </div>
-            <!--<div class="padding" data-ng-if="post.selftext">
-                {{post.selftext}}
-            </div>-->
         </div>
     </div>
     <!--<uib-accordion>

@@ -69,3 +69,52 @@ body {
         margin:$footer-height/3 0;
     }
 }
+
+$reddit-header-font-sizes: (
+  null  : $font-size-h4,
+  $screen-sm-min : $font-size-h4,
+  $screen-md-min : $font-size-h3,
+  $screen-lg-min: $font-size-h3
+);
+
+$twitter-header-font-sizes: (
+  null  : $font-size-h4,
+  $screen-sm-min : $font-size-h4,
+  $screen-md-min : $font-size-h3,
+  $screen-lg-min: $font-size-h3
+);
+
+@mixin font-size($fs-map) {
+  @each $fs-breakpoint, $fs-font-size in $fs-map {
+    @if $fs-breakpoint == null {
+      font-size: $fs-font-size;
+    }
+    @else {
+      @media (min-width: $fs-breakpoint) {
+        font-size: $fs-font-size;
+      }
+    }
+  }
+}
+
+
+.reddit-heading {
+    @include font-size($reddit-header-font-sizes);
+}
+
+.twitter-heading{
+    @include font-size($twitter-header-font-sizes);
+    
+    small {
+        @media (max-width:$screen-sm-min){
+            font-size:$font-size-h5;
+            display:block;
+        }
+    }
+}
+
+.imgur-post {
+    img {
+        max-width:680px;
+    }
+}

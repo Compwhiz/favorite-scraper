@@ -1,69 +1,123 @@
 /// <reference path="../../references" />
 
 module imgur.services {
-	export class ImgurService {
-		static $inject: string[] = ['$http', '$q'];
-		apiBase: string = '/api/imgur/';
-		currentUser: any = null;
+    export class ImgurService {
+        static $inject: string[] = ['$http', '$q'];
+        apiBase: string = '/api/imgur/';
+        currentUser: any = null;
 
-		constructor(private $http: ng.IHttpService, private $q: ng.IQService) { }
+        constructor(private $http: ng.IHttpService, private $q: ng.IQService) { }
 
-		static factory() {
-			var factory = ($http: ng.IHttpService, $q: ng.IQService) => new ImgurService($http, $q);
-			factory.$inject = ImgurService.$inject;
-			return factory;
-		}
+        static factory() {
+            let factory = ($http: ng.IHttpService, $q: ng.IQService) => new ImgurService($http, $q);
+            factory.$inject = ImgurService.$inject;
+            return factory;
+        }
 
-		public getAccount() {
-			var defer = this.$q.defer();
+        /**
+         * getAccount()
+         */
+        public getAccount() {
+            let defer = this.$q.defer();
 
-			this.$http.get(this.apiBase + 'account').then(response=> {
-				if (response.status === 200) {
-					defer.resolve(response.data);
-				} else {
-					defer.reject(response.data);
-				}
-			}).catch(error=> {
-				defer.reject(error.data);
-			});
+            this.$http.get(this.apiBase + 'account').then(response=> {
+                if (response.status === 200) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
 
-			return defer.promise;
-		}
+            return defer.promise;
+        }
 
-		public getFavorites() {
-			var defer = this.$q.defer<any>();
+        /**
+         * getFavorites()
+         */
+        public getFavorites() {
+            let defer = this.$q.defer<any>();
 
-			this.$http.get(this.apiBase + 'favorites').then(response=> {
-				if (response.status === 200) {
-					defer.resolve(response.data);
-				} else {
-					defer.reject(response.data);
-				}
-			}).catch(error=> {
-				defer.reject(error.data);
-			});
+            this.$http.get(this.apiBase + 'favorites').then(response=> {
+                if (response.status === 200) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
 
-			return defer.promise;
-		}
-		
-		public refresh() {
-			var defer = this.$q.defer();
+            return defer.promise;
+        }
 
-			this.$http.get(this.apiBase + 'refresh').then(response=> {
-				if (response.status === 200) {
-					defer.resolve(response.data);
-				} else {
-					defer.reject(response.data);
-				}
-			}).catch(error=> {
-				defer.reject(error.data);
-			});
+        /**
+         * getAlbumInfo(album)
+         */
+        public getAlbumInfo(album) {
+            let defer = this.$q.defer<any>();
 
-			return defer.promise;
-		}
-	}
+            if (!(album && album.id)) {
+                defer.resolve(null);
+            } else {
+                let url = this.apiBase + 'album/' + album.id;
+                this.$http.get(url).then(response=> {
+                    if (response.status === 200) {
+                        defer.resolve(response.data);
+                    } else {
+                        defer.reject(response.data);
+                    }
+                }).catch(error=> {
+                    defer.reject(error.data);
+                });
+            }
+
+            return defer.promise;
+        }
+
+        /**
+         * getAlbumImages(album)
+         */
+        public getAlbumImages(album) {
+            let defer = this.$q.defer<any>();
+
+            if (!(album && album.id)) {
+                defer.resolve(null);
+            } else {
+                let url = this.apiBase + 'album/' + album.id + '/images';
+                this.$http.get(url).then(response=> {
+                    if (response.status === 200) {
+                        defer.resolve(response.data);
+                    } else {
+                        defer.reject(response.data);
+                    }
+                }).catch(error=> {
+                    defer.reject(error.data);
+                });
+            }
+
+            return defer.promise;
+        }
+
+        public refresh() {
+            let defer = this.$q.defer();
+
+            this.$http.get(this.apiBase + 'refresh').then(response=> {
+                if (response.status === 200) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(response.data);
+                }
+            }).catch(error=> {
+                defer.reject(error.data);
+            });
+
+            return defer.promise;
+        }
+    }
 }
 
 (() => {
-	angular.module('imgur').factory('ImgurService', imgur.services.ImgurService.factory());
+    angular.module('imgur').factory('ImgurService', imgur.services.ImgurService.factory());
 })();
